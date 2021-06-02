@@ -1,2 +1,2 @@
 # PracowniaDyplomowa
-Tutaj będzie praca inżynierska Marcina Kozłowskiego
+Tutaj będzie praca inżynierska studenta Informatyki Marcina Kozłowskiego
