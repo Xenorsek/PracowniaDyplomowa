@@ -111,7 +111,7 @@ const ToggleContainer = styled.button`
 `;
 const useDarkMode = () => {
   const [theme, setTheme] = useState("light");
-
+  
   const toggleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -130,7 +130,7 @@ const useDarkMode = () => {
     } else {
       window.localStorage.setItem("theme", "light");
     }
-  });
+  },[]);
 
   return [theme, toggleTheme];
 };
