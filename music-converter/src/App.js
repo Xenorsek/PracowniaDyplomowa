@@ -30,6 +30,7 @@ function App() {
           <h1>Hello World</h1>
           <ChangeLanguage />
         <MyComponent/>
+        <Welcome></Welcome>
         </div>
       </Suspense>
     </ThemeProvider>
