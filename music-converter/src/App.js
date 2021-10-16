@@ -1,19 +1,37 @@
-import LocaleSwitcher from "./localeSwitcher";
-import { darkTheme, lightTheme, GlobalStyles, useDarkMode, Toggle }from "./toggle-component/Toggle"
-import { ThemeProvider } from 'styled-components';
+import {
+  darkTheme,
+  lightTheme,
+  GlobalStyles,
+  useDarkMode,
+  Toggle,
+} from "./toggle-component/Toggle";
+import { ThemeProvider } from "styled-components";
+import NavbarTop from "./navbar-top/navbar-top-component";
+//translate template
+import React, { Suspense } from "react";
+import { withTranslation } from "react-i18next";
+
+import { WelcomeClass, LegacyWelcomeClass } from "./i18n/translation"
+import ChangeLanguage from "./i18n/changeLanguage";
+
+
+const MyComponent = withTranslation()(WelcomeClass);
+const Welcome = withTranslation()(LegacyWelcomeClass);
 
 function App() {
   const [theme, toggleTheme] = useDarkMode();
-  const themeMode = theme === 'light' ? lightTheme : darkTheme;
-
+  const themeMode = theme === "light" ? lightTheme : darkTheme;
   return (
     <ThemeProvider theme={themeMode}>
-      <GlobalStyles />
-      <Toggle theme={theme} toggleTheme={toggleTheme} />
-    <div className="App">
-      <h1>Hello World</h1>
-      <LocaleSwitcher />
-    </div>
+      <Suspense fallback="loading">
+        <GlobalStyles />
+        <Toggle theme={theme} toggleTheme={toggleTheme} />
+        <div className="App">
+          <h1>Hello World</h1>
+          <ChangeLanguage />
+        <MyComponent/>
+        </div>
+      </Suspense>
     </ThemeProvider>
   );
 }
