@@ -11,13 +11,13 @@ import NavbarTop from "./navbar-top/navbar-top-component";
 import React, { Suspense } from "react";
 import { withTranslation } from "react-i18next";
 
-import { WelcomeClass, LegacyWelcomeClass } from "./i18n/translation"
+import { WelcomeClass, LegacyWelcomeClass, HelloWorld } from "./i18n/translation"
 import ChangeLanguage from "./i18n/changeLanguage";
 
 
 const MyComponent = withTranslation()(WelcomeClass);
 const Welcome = withTranslation()(LegacyWelcomeClass);
-
+const Helloworld = withTranslation()(HelloWorld);
 function App() {
   const [theme, toggleTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
@@ -27,10 +27,10 @@ function App() {
         <GlobalStyles />
         <Toggle theme={theme} toggleTheme={toggleTheme} />
         <div className="App">
-          <h1>Hello World</h1>
+          <Helloworld />
           <ChangeLanguage />
-        <MyComponent/>
-        <Welcome></Welcome>
+        <MyComponent />
+        <Welcome />
         </div>
       </Suspense>
     </ThemeProvider>

@@ -13,19 +13,20 @@ i18n
     resources: {
       en: {
         translation: {
-          "Welcome to React": "Welcome to React and react-i18next",
-          "title":"titlexdfhggfdfgddd"
+          "Welcome": "Welcome to Music Converter",
+          "title":"Music Converter",
+          "Hello World": "Hello world"
         }
       },
       pl:{
         translation: {
-          "Welcome to React" :"chore pojeby",
-          "title":"tytu342234lxd"
+          "Welcome" :"Witaj w Music Converter",
+          "title":"Music Converter",
+          "Hello World": "Witaj świecie"
         }
       },
 
     },
-    lng: "pl", // if you're using a language detector, do not define the lng option
     fallbackLng: "pl",
 
     interpolation: {
