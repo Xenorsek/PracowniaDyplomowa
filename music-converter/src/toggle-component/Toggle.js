@@ -1,61 +1,6 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const GlobalStyles = createGlobalStyle`
-  *,
-  *::after,
-  *::before {
-    box-sizing: border-box;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.text};
-    padding: 0;
-    margin: 0;
-    font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    transition: all 0.25s linear;
-  }
-
-  footer {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  small {
-    display: block;
-  }
-
-  button {
-    display: block;
-  }
-
-  a {
-    color: ${({ theme }) => theme.text};
-  }
-`;
-
-const lightTheme = {
-  body: "#e2e2e2",
-  text: "#363537",
-  toggleBorder: "#fff",
-  gradient: "linear-gradient(#39598A, #79D7ED)",
-};
-
-const darkTheme = {
-  body: "#363537",
-  text: "#FAFAFA",
-  toggleBorder: "#6B8096",
-  gradient: "linear-gradient(#091236, #1E215D)",
-};
 const Toggle = ({ theme, toggleTheme }) => {
   const isLight = theme === "light";
 
@@ -134,4 +79,4 @@ const useDarkMode = () => {
 
   return [theme, toggleTheme];
 };
-export { darkTheme, lightTheme, GlobalStyles, useDarkMode, Toggle };
+export { useDarkMode, Toggle };
