@@ -1,6 +1,5 @@
 import React from "react";
 import i18n from "./i18n";
-import { Select } from 'react-bootstrap';
 class ChangeLanguage extends React.Component {
     constructor(props) {
         super(props);

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+
 class WelcomeClass extends Component {
     render() {
-      const { t } =this.props;
+      const {t} = this.props;
       return <h1>{t('Welcome')}</h1>;
     }
   }
@@ -14,7 +15,7 @@ class WelcomeClass extends Component {
   class HelloWorld extends Component {
     render(){
       const {t} = this.props;
-      return <h1>{t('Hello World')}</h1>
+      return <h1>{t('HelloWorld')}</h1>
     }
   }
 
