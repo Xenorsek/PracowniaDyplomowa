@@ -8,7 +8,7 @@ import './i18n/i18n';
 ReactDOM.render(
   <BrowserRouter>
   <React.StrictMode>
-    <App />
+        <App />
   </React.StrictMode>
   </BrowserRouter>,
   document.getElementById('root')

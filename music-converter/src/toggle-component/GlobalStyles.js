@@ -4,6 +4,8 @@ export const GlobalStyles = createGlobalStyle`
   *::after,
   *::before {
     box-sizing: border-box;
+    margin:0;
+    padding:0;
   }
 
   body {
@@ -19,10 +21,10 @@ export const GlobalStyles = createGlobalStyle`
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     transition: all 0.25s linear;
   }
+  /*TOPNAVBAR*/
   .navbar {
     display: flex;
     align-items: center;
-    
     background: rebeccapurple;
     color: white;
     font-family: Helvetica;
@@ -56,6 +58,11 @@ export const GlobalStyles = createGlobalStyle`
   a {
     color: ${({ theme }) => theme.text};
   }
+ .record-element{
+   align-items:center;
+   justify-content: center;
+ }
+
   .App {
       margin:0,auto;
   }

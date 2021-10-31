@@ -1,16 +1,15 @@
 import React from "react";
 import ChangeLanguage from "../i18n/changeLanguage";
+import Sidenavbar from "../side-nav-bar/Sidenavbar";
 class NavBar extends React.Component {
   showSettings (event) {
-
     event.preventDefault();
   }
   render() {
-
     const {t} = this.props;
     return (
       <header className="navbar">
-
+        <div className="navbar__title navbar__item"><Sidenavbar/></div>
         <div className="navbar__title navbar__item">{t('title')}</div>
         <div className="navbar__item"><ChangeLanguage/></div>
         <div className="navbar__item">{t('Login')}</div>

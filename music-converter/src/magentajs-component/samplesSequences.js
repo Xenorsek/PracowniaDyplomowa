@@ -1,4 +1,4 @@
-        exports.array = [{
+        export const SamplesSequences = [{
             title:"TWINKLE_TWINKLE",
             notes: [
               {pitch: 60, startTime: 0.0, endTime: 0.5},
@@ -20,7 +20,8 @@
               time: 0, 
               qpm: 120
             }],
-            totalTime: 8
+            totalTime: 8,
+            name:"HALINA",
           },
          {
            title:"YEAAAH",
@@ -44,22 +45,8 @@
                 time: 0, 
                 qpm: 120
               }],
-              totalTime: 8
+              totalTime: 8,
+              name:"Tomasz",
             },
-            {
-              title:"Trzeci",
-              notes: [
-                { pitch: 69, quantizedStartStep: 0, quantizedEndStep: 2, program: 0 },
-                { pitch: 71, quantizedStartStep: 2, quantizedEndStep: 4, program: 0 },
-                { pitch: 73, quantizedStartStep: 4, quantizedEndStep: 6, program: 0 },
-                { pitch: 74, quantizedStartStep: 6, quantizedEndStep: 8, program: 0 },
-                { pitch: 76, quantizedStartStep: 8, quantizedEndStep: 10, program: 0 },
-                { pitch: 81, quantizedStartStep: 12, quantizedEndStep: 16, program: 0 },
-                { pitch: 78, quantizedStartStep: 16, quantizedEndStep: 20, program: 0 },
-                { pitch: 81, quantizedStartStep: 20, quantizedEndStep: 24, program: 0 },
-                { pitch: 76, quantizedStartStep: 24, quantizedEndStep: 26, program: 0 }
-              ],
-              quantizationInfo: { stepsPerQuarter: 4 },
-              totalQuantizedSteps: 26,
-            }
+            {"title": "Czwarty", "notes":[{"pitch":69,"velocity":61,"startTime":0.192,"endTime":0.352},{"pitch":71,"velocity":62,"startTime":0.28800000000000003,"endTime":0.896},{"pitch":60,"velocity":44,"startTime":0.28800000000000003,"endTime":0.928},{"pitch":69,"velocity":60,"startTime":0.608,"endTime":0.928},{"pitch":67,"velocity":49,"startTime":2.048,"endTime":2.112},{"pitch":62,"velocity":54,"startTime":1.536,"endTime":2.208},{"pitch":68,"velocity":51,"startTime":1.984,"endTime":2.208},{"pitch":69,"velocity":54,"startTime":1.856,"endTime":2.208},{"pitch":55,"velocity":38,"startTime":1.568,"endTime":2.24},{"pitch":71,"velocity":59,"startTime":0.896,"endTime":2.24},{"pitch":50,"velocity":38,"startTime":1.28,"endTime":2.432},{"pitch":66,"velocity":55,"startTime":2.176,"endTime":2.976},{"pitch":59,"velocity":50,"startTime":2.912,"endTime":3.36},{"pitch":66,"velocity":49,"startTime":2.976,"endTime":3.36},{"pitch":82,"velocity":66,"startTime":3.232,"endTime":3.36},{"pitch":54,"velocity":59,"startTime":3.2640000000000002,"endTime":3.424},{"pitch":64,"velocity":60,"startTime":3.456,"endTime":3.552}],"totalTime":3.552,"name":"Arek"},
         ];

@@ -3,6 +3,7 @@ import React from "react";
 import * as mm from "@magenta/music";
 
 const inputEl = React.createRef(null);
+const blob = []; 
 
 class MusicConverter extends React.Component {
   state = {
@@ -14,48 +15,75 @@ class MusicConverter extends React.Component {
     viz: null,
     playerViz: null,
     //Recorder
-    recorder: new mm.Recorder(),
+    recorder: null,
     seq: null,
+    isRecording: false,
+    recordingBroken: false,
+  };
+
+  setIsRecord = () => {
+    if (this.state.isRecording == false) {
+      this.state.isRecording = true;
+    } else {
+      this.state.isRecording = false;
+    }
+  };
+
+  setRecordingBroken = () => {
+    if (this.state.recordingBroken == false) {
+      this.state.recordingBroken = true;
+    } else {
+      this.state.recordingBroken = false;
+    }
   };
 
   onStartRecordButtonClick = () => {
-    this.state.recorder.callbackObject = null;
-    this.state.recorder.start();
-    console.log("Recording Start");
+    blob.pop();
+    if (this.state.isRecording) {
+      this.setIsRecord();
+      this.state.recorder.stop();
+    } else {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+        this.setIsRecord();
+        this.state.recorder = new MediaRecorder(stream);
+        this.state.recorder.start();
+        console.log(this.state.recorder.state);
+      });
+    }
   };
+
+
 
   onStopRecordButtonClick = () => {
-    const sequence = this.state.recorder.stop();
-    console.log(sequence);
-    this.setState({
-      seq: sequence,
-    });
-    console.log("Recording Stop");
+    this.state.recorder.stop();
+    //przechowywanie danych w blob
+    this.state.recorder.ondataavailable = e => blob.push(e.data);
+    console.log(this.state.recorder.state);
+
+    this.setIsRecord();
+
   };
 
-  // onClickShowSeqBTn = () => {
-  //   console.log(this.state.seq);
-  //   console.log(this.state.recorder.getNoteSequence());
-  // };
+
+   onClickTrascriptFromMic = () => {
+
+    this.state.model.initialize().then(() => {
+      this.state.model
+        .transcribeFromAudioFile(blob[0])
+        .then((ns) => {
+          this.setState({
+            notes: ns,
+          });
+        });
+    });
+  };
 
   onFileChange = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
   };
-  onTranscribe = (event) => {
-    this.setState({ notes: event });
-  };
-  onFileUpload = () => {
-    const formData = new FormData();
-
-    formData.append(
-      "myFile",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
-    console.log(this.state.selectedFile);
-  };
 
   onTranscribe = () => {
+
     this.state.model.initialize().then(() => {
       this.state.model
         .transcribeFromAudioFile(this.state.selectedFile)
@@ -71,6 +99,7 @@ class MusicConverter extends React.Component {
       this.state.notes,
       inputEl.current
     );
+    console.log(JSON.stringify(this.state.notes));
     this.state.playerViz = new mm.Player(false, {
       run: (note) => this.state.viz.redraw(note),
       stop: () => {
@@ -97,20 +126,17 @@ class MusicConverter extends React.Component {
       return (
         <div>
           <br />
-          <h4>Choose before Pressing the Upload button</h4>
+          <h3>Pick file</h3>
         </div>
       );
     }
   };
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
   render() {
     return (
       <div>
         <div>
           <input type="file" onChange={this.onFileChange} id="fileInput" />
-          <button onClick={this.onFileUpload}>Upload!</button>
         </div>
 
         {this.fileData()}
@@ -132,7 +158,8 @@ class MusicConverter extends React.Component {
           Recording
           <button onClick={this.onStartRecordButtonClick}>Start</button>
           <button onClick={this.onStopRecordButtonClick}>Stop</button>
-          <button onClick={this.onClickShowSeqBTn}>Show</button>
+          <button onClick={this.onClickTrascriptFromMic}>Transcibe</button>
+          <button onClick={this.onClickShowViz}>ShowVizualizer</button>
         </section>
       </div>
     );
