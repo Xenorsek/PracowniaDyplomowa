@@ -2,10 +2,12 @@ import React from "react";
 import * as RiIcons from "react-icons/ri";
 import * as AiIcons from "react-icons/ai";
 import * as BsIcons from "react-icons/bs";
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 import * as mm from "@magenta/music";
+import { projectFirestore } from "../firebase/config";
+import { Prompt } from "react-router";
 
 //Ikony do nagrywania odtwarzania
 //RECORDING ON OFF
@@ -35,7 +37,6 @@ class Upload extends React.Component {
     playerViz: null,
     //Recorder
     recorder: null,
-    seq: null,
     isRecording: false,
     recordingBroken: false,
     haveData: false,
@@ -45,7 +46,30 @@ class Upload extends React.Component {
       haveData: true,
     });
   };
+  handleSendData = async (e) => {
+    e.preventDefault();
+    const name = "Halina";
+    var notes = [];
 
+    this.state.notes.notes.forEach((element) => {
+      const pitch = element.pitch;
+      const startTime = element.startTime;
+      const endTime = element.endTime;
+      const velocity = element.velocity;
+
+      notes.push({ pitch, startTime, endTime, velocity });
+    });
+    const tempos = this.state.notes.tempos;
+    const title = "Death metal Never Die";
+    const totalTime = this.state.notes.totalTime;
+    const doc = { name, notes, tempos, title, totalTime };
+
+    try {
+      await projectFirestore.collection("musicSequences").add(doc);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   handleAddFile = () => {
     hiddenFileInput.current.click();
   };
@@ -135,25 +159,24 @@ class Upload extends React.Component {
   render() {
     return (
       <div>
+        <div className="record-element">
+          <h1>Pick File</h1>
+          <RiIcons.RiUploadLine onClick={this.handleAddFile} />
+          <input
+            type="file"
+            onChange={this.onFileChange}
+            id="fileInput"
+            ref={hiddenFileInput}
+            style={{ display: "none" }}
+          />
+        </div>
 
-          <div className="record-element">
-            <h1>Pick File</h1>
-            <RiIcons.RiUploadLine onClick={this.handleAddFile} />
-            <input
-              type="file"
-              onChange={this.onFileChange}
-              id="fileInput"
-              ref={hiddenFileInput}
-              style={{ display: "none" }}
-            />
-          </div>
+        <div className="record-element">
+          <h1>Recorder</h1>
+          <BsIcons.BsMic onClick={this.onClickMic} />
+        </div>
 
-          <div className="record-element">
-            <h1>Recorder</h1>
-            <BsIcons.BsMic onClick={this.onClickMic} />
-          </div>
-
-          <div className="record-element" style={{textAlign:"center"}}>
+        <div className="record-element" style={{ textAlign: "center" }}>
           {this.state.haveData && (
             <AiIcons.AiOutlinePlayCircle
               onClick={() => {
@@ -163,9 +186,11 @@ class Upload extends React.Component {
               }}
             />
           )}
-            <canvas ref={inputEl} />
-          </div>
-
+          <canvas ref={inputEl} />
+        </div>
+        {this.state.notes && (
+          <button onClick={this.handleSendData}>Send To DataBase</button>
+        )}
       </div>
     );
   }

@@ -12,29 +12,30 @@ class Element extends React.Component {
       player: new mm.Player(),
       viz: {},
       playerViz: {},
-      name:this.props.name,
+      name: this.props.name,
     };
-    this.textInput = null;
-    this.setTextInputRef = element=>{
-      this.textInput = element;
-    }
-
   }
 
   componentDidMount() {
-    this.state.viz = new mm.PianoRollCanvasVisualizer(this.state.seq, inputEl.current);
+    this.state.viz = new mm.PianoRollCanvasVisualizer(
+      this.state.seq,
+      inputEl.current
+    );
     this.state.playerViz = new mm.Player(false, {
       run: (note) => this.state.viz.redraw(note),
-      stop: () => {console.log('done');}
-    })
+      stop: () => {
+        console.log("done");
+      },
+    });
   }
   render() {
-
     return (
       <div>
         <h1>{this.state.name}</h1>
-        <canvas ref={inputEl}/>
-        <div><h1>{this.state.title}</h1></div>
+        <canvas ref={inputEl} />
+        <div>
+          <h1>{this.state.title}</h1>
+        </div>
         <button
           onClick={() => {
             this.state.player.isPlaying()
@@ -44,12 +45,13 @@ class Element extends React.Component {
         >
           Play
         </button>
-        <button 
-        onClick={() =>{
-          this.state.playerViz.isPlaying()
+        <button
+          onClick={() => {
+            this.state.playerViz.isPlaying()
               ? this.state.playerViz.stop()
               : this.state.playerViz.start(this.state.seq);
-        }}>
+          }}
+        >
           PlayViz
         </button>
       </div>
