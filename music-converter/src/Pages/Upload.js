@@ -2,12 +2,9 @@ import React from "react";
 import * as RiIcons from "react-icons/ri";
 import * as AiIcons from "react-icons/ai";
 import * as BsIcons from "react-icons/bs";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 
 import * as mm from "@magenta/music";
 import { projectFirestore } from "../firebase/config";
-import { Prompt } from "react-router";
 
 //Ikony do nagrywania odtwarzania
 //RECORDING ON OFF

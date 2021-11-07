@@ -1,22 +1,61 @@
 import React from "react";
 import ChangeLanguage from "../i18n/changeLanguage";
 import Sidenavbar from "../side-nav-bar/Sidenavbar";
+import { Link } from "react-router-dom";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
+function withMyHooks(Component) {
+  return function WrappedComponent(props) {
+    const useLogoutValue = useLogout();
+    const useAuthContextValue = useAuthContext();
+    return (
+      <Component
+        {...props}
+        useLogoutValue={useLogoutValue}
+        useAuthContextValue={useAuthContextValue}
+      />
+    );
+  };
+}
+
 class NavBar extends React.Component {
-  showSettings (event) {
-    event.preventDefault();
-  }
   render() {
-    const {t} = this.props;
+    const { logout } = this.props.useLogoutValue;
+    const { t } = this.props;
+    const { user } = this.props.useAuthContextValue;
     return (
       <header className="navbar">
-        <div className="navbar__title navbar__item"><Sidenavbar/></div>
-        <div className="navbar__title navbar__item">{t('title')}</div>
-        <div className="navbar__item"><ChangeLanguage/></div>
-        <div className="navbar__item">{t('Login')}</div>
-        <div className="navbar__item">{t('Signin')}</div>
-        <div className="navbar__item">{t('Profil')}</div>
+        <div className="navbar__title navbar__item">
+          <Sidenavbar />
+        </div>
+        <div className="navbar__title navbar__item">{t("title")}</div>
+        <div className="navbar__item">
+          <ChangeLanguage />
+        </div>
+        {!user && (
+          <>
+            <div className="navbar__item">
+              <Link to={"/login"}>
+                <span>{t("Login")}</span>
+              </Link>
+            </div>
+            <Link to={"/signup"}>
+              <div className="navbar__item">
+                <span>{t("Signup")}</span>
+              </div>
+            </Link>
+          </>
+        )}
+        {user && (
+          <>
+            <div className="navbar__item">{user.displayName}</div>
+            <div className="navbar__item" onClick={logout}>
+              Logout
+            </div>
+          </>
+        )}
       </header>
     );
   }
 }
-export default NavBar;
+export default withMyHooks(NavBar);
