@@ -23,6 +23,7 @@ class NavBar extends React.Component {
     const { logout } = this.props.useLogoutValue;
     const { t } = this.props;
     const { user } = this.props.useAuthContextValue;
+    
     return (
       <header className="navbar">
         <div className="navbar__title navbar__item">

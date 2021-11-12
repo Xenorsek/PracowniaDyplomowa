@@ -5,26 +5,26 @@ import * as BsIcons from "react-icons/bs";
 
 import * as mm from "@magenta/music";
 import { projectFirestore } from "../firebase/config";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-//Ikony do nagrywania odtwarzania
-//RECORDING ON OFF
-//<BsIcons.BsMic />
-//<BsIcons.BsMicFill />
-//PLAY BUTTON FILL OUTLINE
-//<AiIcons.AiFillPlayCircle />
-//AiIcons.AiOutlinePlayCircle />
-//PAUSE BUTTON FILL OUTLINE
-//<AiIcons.AiOutlinePauseCircle />
-//AiIcons.AiFillPauseCircle />
-//UPLOAD BUTTON
-//<RiIcons.RiUploadLine />
-//<RiIcons.RiUploadFill />
+function withMyHooks(Component) {
+  return function WrappedComponent(props) {
+    const useAuthContextValue = useAuthContext();
+    return (
+      <Component
+        {...props}
+        useAuthContextValue={useAuthContextValue}
+      />
+    );
+  };
+}
 
 const inputEl = React.createRef(null);
 const hiddenFileInput = React.createRef(null);
 const blob = [];
 class Upload extends React.Component {
   state = {
+    user : this.props.useAuthContextValue,
     selectedFile: null,
     model: new mm.OnsetsAndFrames(
       "https://storage.googleapis.com/magentadata/js/checkpoints/transcription/onsets_frames_uni"
@@ -45,9 +45,16 @@ class Upload extends React.Component {
   };
   handleSendData = async (e) => {
     e.preventDefault();
-    const name = "Halina";
+    var {user} = this.state.user;
+    var name = "";
+    if(!user){
+     name = "Annonymous";
+    }
+    else{
+      name = user.displayName
+    }
+    console.log(user)
     var notes = [];
-
     this.state.notes.notes.forEach((element) => {
       const pitch = element.pitch;
       const startTime = element.startTime;
@@ -193,4 +200,4 @@ class Upload extends React.Component {
   }
 }
 
-export default Upload;
+export default withMyHooks(Upload);
