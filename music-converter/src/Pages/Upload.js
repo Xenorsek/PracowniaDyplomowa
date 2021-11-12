@@ -25,6 +25,7 @@ const blob = [];
 class Upload extends React.Component {
   state = {
     user : this.props.useAuthContextValue,
+    title: "Type title here",
     selectedFile: null,
     model: new mm.OnsetsAndFrames(
       "https://storage.googleapis.com/magentadata/js/checkpoints/transcription/onsets_frames_uni"
@@ -64,7 +65,7 @@ class Upload extends React.Component {
       notes.push({ pitch, startTime, endTime, velocity });
     });
     const tempos = this.state.notes.tempos;
-    const title = "Death metal Never Die";
+    const title = this.state.title;
     const totalTime = this.state.notes.totalTime;
     const doc = { name, notes, tempos, title, totalTime };
 
@@ -130,6 +131,10 @@ class Upload extends React.Component {
     });
   };
 
+  handleChangeTitle = (event) =>{
+    this.setState({title: event.target.value})
+  }
+
   onFileChange = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
     this.onTranscribe();
@@ -193,7 +198,10 @@ class Upload extends React.Component {
           <canvas ref={inputEl} />
         </div>
         {this.state.notes && (
+          <>
+          <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
           <button onClick={this.handleSendData}>Send To DataBase</button>
+          </>
         )}
       </div>
     );

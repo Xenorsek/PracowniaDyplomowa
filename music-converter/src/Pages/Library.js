@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Element from "../magentajs-component/element";
 import Elements from "../magentajs-component/elements";
-import { SamplesSequences } from "../magentajs-component/samplesSequences";
 import { projectFirestore } from "../firebase/config";
 function Library() {
   const [data, setData] = useState(null);

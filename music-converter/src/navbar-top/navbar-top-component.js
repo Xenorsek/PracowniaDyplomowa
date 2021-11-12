@@ -51,7 +51,7 @@ class NavBar extends React.Component {
           <>
             <div className="navbar__item">{user.displayName}</div>
             <div className="navbar__item" onClick={logout}>
-              Logout
+              <span>{t('Logout')}</span>
             </div>
           </>
         )}

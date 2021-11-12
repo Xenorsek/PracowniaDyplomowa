@@ -19,6 +19,7 @@ i18n
           Login: "Log in",
           Signup: "Sign in",
           Profil: "Your profile",
+          Logout: "Logout",
         },
       },
       pl: {
@@ -29,6 +30,7 @@ i18n
           Login: "Zaloguj",
           Signup: "Zarejestruj",
           Profil: "Twój profil",
+          Logout: "Wyloguj",
         },
       },
     },
