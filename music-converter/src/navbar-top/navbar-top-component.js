@@ -29,7 +29,8 @@ class NavBar extends React.Component {
         <div className="navbar__title navbar__item">
           <Sidenavbar />
         </div>
-        <div className="navbar__title navbar__item">{t("title")}</div>
+        <Link to={"/"}><div className="navbar__title navbar__item">{t("title")}</div>
+        </Link>
         <div className="navbar__item">
           <ChangeLanguage />
         </div>
