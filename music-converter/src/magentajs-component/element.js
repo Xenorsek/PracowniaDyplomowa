@@ -1,5 +1,14 @@
 import React from "react";
 import * as mm from "@magenta/music";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { projectFirestore } from "../firebase/config";
+
+function withMyHooks(Component) {
+  return function WrappedComponent(props) {
+    const useAuthContextValue = useAuthContext();
+    return <Component {...props} useAuthContextValue={useAuthContextValue} />;
+  };
+}
 
 const inputEl = React.createRef(null);
 
@@ -13,8 +22,26 @@ class Element extends React.Component {
       viz: {},
       playerViz: {},
       name: this.props.name,
+      key: this.props.key,
+      id: this.props.seq.id,
+      canDelete: this.props.canDelete,
     };
   }
+  handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      await projectFirestore
+        .collection("musicSequences")
+        .doc(this.state.id)
+        .delete().then(()=>{
+            console.log("Document successfully deleted!");
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        })
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   componentDidMount() {
     this.state.viz = new mm.PianoRollCanvasVisualizer(
@@ -54,8 +81,9 @@ class Element extends React.Component {
         >
           PlayViz
         </button>
+        {this.state.canDelete && <button onClick={this.handleDelete}>Delete</button>}
       </div>
     );
   }
 }
-export default Element;
+export default withMyHooks(Element);

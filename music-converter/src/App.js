@@ -31,6 +31,7 @@ import {
 } from "react-router-dom";
 
 const TopNavBar = withTranslation()(NavBar);
+const UploadComponent = withTranslation()(Upload);
 function App() {
   const { authIsReady, user } = useAuthContext();
   const [theme, toggleTheme] = useDarkMode();
@@ -47,7 +48,7 @@ function App() {
               <Switch>
                 <Route exact={true} path="/" component={Home} />
                 <Route path="/library" component={Library} />
-                <Route path="/upload" component={Upload} />
+                <Route path="/upload" component={UploadComponent} />
                 <Route path="/uploads" component={Uploads} >
                 {!user && <Redirect to="/" />}
                   {user && <Uploads />}

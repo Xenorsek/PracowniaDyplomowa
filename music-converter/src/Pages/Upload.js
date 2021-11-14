@@ -54,7 +54,6 @@ class Upload extends React.Component {
     else{
       name = user.displayName
     }
-    console.log(user)
     var notes = [];
     this.state.notes.notes.forEach((element) => {
       const pitch = element.pitch;
@@ -67,10 +66,15 @@ class Upload extends React.Component {
     const tempos = this.state.notes.tempos;
     const title = this.state.title;
     const totalTime = this.state.notes.totalTime;
-    const doc = { name, notes, tempos, title, totalTime };
+    const author = user.uid;
+    const doc = { name, notes, tempos, title, totalTime, author };
 
     try {
-      await projectFirestore.collection("musicSequences").add(doc);
+      await projectFirestore.collection("musicSequences").add(doc).then(()=>{
+        console.log("Document successfully added!");
+    }).catch((error) => {
+        console.error("Error with added document: ", error);
+    });
     } catch (err) {
       console.log(err);
     }
@@ -166,10 +170,11 @@ class Upload extends React.Component {
     this.handleHaveData();
   };
   render() {
+    const { t } = this.props;
     return (
       <div>
         <div className="record-element">
-          <h1>Pick File</h1>
+          <h1>{t("pickFile")}</h1>
           <RiIcons.RiUploadLine onClick={this.handleAddFile} />
           <input
             type="file"
@@ -181,7 +186,7 @@ class Upload extends React.Component {
         </div>
 
         <div className="record-element">
-          <h1>Recorder</h1>
+          <h1>{t("Recorder")}</h1>
           <BsIcons.BsMic onClick={this.onClickMic} />
         </div>
 

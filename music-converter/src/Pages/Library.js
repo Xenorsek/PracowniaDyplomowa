@@ -5,6 +5,7 @@ function Library() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
+  const canDelete = false;
   useEffect(() => {
     setIsPending(true);
     projectFirestore
@@ -34,7 +35,7 @@ function Library() {
       {error && <p className="error">{error}</p>}
       {isPending && <p className="loading"> Loading...</p>}
       {data && (
-          <Elements sequences={data}/>
+          <Elements sequences={data} canDelete = {canDelete}/>
       )}
     </div>
   );

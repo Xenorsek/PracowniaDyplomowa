@@ -20,6 +20,8 @@ i18n
           Signup: "Sign in",
           Profil: "Your profile",
           Logout: "Logout",
+          pickFile: "Pick File",
+          Recorder: "Recorder",
         },
       },
       pl: {
@@ -31,6 +33,8 @@ i18n
           Signup: "Zarejestruj",
           Profil: "Twój profil",
           Logout: "Wyloguj",
+          pickFile: "Wybierz plik",
+          Recorder: "Nagrywarka",
         },
       },
     },

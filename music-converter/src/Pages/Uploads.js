@@ -8,10 +8,11 @@ function Uploads() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
+  const canDelete = true;
   useEffect(() => {
     setIsPending(true);
     projectFirestore
-      .collection("musicSequences").where("name","==",user.displayName)
+      .collection("musicSequences").where("author","==",user.uid)
       .get()
       .then((snapshot) => {
         if (snapshot.empty) {
@@ -35,7 +36,7 @@ function Uploads() {
     <div className="Uploads">
       {error && <p className="error">{error}</p>}
       {isPending && <p className="loading"> Loading...</p>}
-      {data && <Elements sequences={data} />}
+      {data && <Elements sequences={data} canDelete = {canDelete} />}
     </div>
   );
 }
