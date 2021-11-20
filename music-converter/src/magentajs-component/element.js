@@ -2,11 +2,21 @@ import React from "react";
 import * as mm from "@magenta/music";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { projectFirestore } from "../firebase/config";
-
+import { useAddFavorites } from "../hooks/useAddFavorites";
+import { useRemoveFavorites } from "../hooks/useRemoveFavorites";
 function withMyHooks(Component) {
   return function WrappedComponent(props) {
     const useAuthContextValue = useAuthContext();
-    return <Component {...props} useAuthContextValue={useAuthContextValue} />;
+    const useAddFavoritesValue = useAddFavorites();
+    const useRemoveFavoritesValue = useRemoveFavorites();
+    return (
+      <Component
+        {...props}
+        useAuthContextValue={useAuthContextValue}
+        useAddFavoritesValue={useAddFavoritesValue}
+        useRemoveFavoritesValue={useRemoveFavoritesValue}
+      />
+    );
   };
 }
 
@@ -26,6 +36,8 @@ class Element extends React.Component {
       id: this.props.seq.id,
       privateCollection: this.props.privateCollection,
       publicStatus: this.props.seq.publicStatus,
+      likesValue: 0,
+      isLiked: false,
     };
   }
   handlePublic = async (e) => {
@@ -76,8 +88,17 @@ class Element extends React.Component {
 
   handleAddToFavorites = async (e) => {
     e.preventDefault();
-  }
-
+    const { user } = this.props.useAuthContextValue;
+    this.props.useAddFavoritesValue.addToFavorites(this.props.seq.id, user.uid);
+  };
+  handleRemoveFromFavorites = async (e) => {
+    e.preventDefault();
+    const { user } = this.props.useAuthContextValue;
+    this.props.useRemoveFavoritesValue.removeFromFavorites(
+      this.props.seq.id,
+      user.uid
+    );
+  };
   handleDelete = async (e) => {
     e.preventDefault();
     try {
@@ -107,6 +128,24 @@ class Element extends React.Component {
         console.log("done");
       },
     });
+    projectFirestore
+      .collection("favorites")
+      .where("musicSequences", "==", this.props.seq.id)
+      .get()
+      .then((snapshot) => {
+        this.setState({ likesValue: snapshot.size });
+      });
+    const { user } = this.props.useAuthContextValue;
+    projectFirestore
+      .collection("favorites")
+      .where("musicSequences", "==", this.props.seq.id)
+      .where("user", "==", user.uid)
+      .get()
+      .then((snapshot) => {
+        if(snapshot.size > 0){
+        this.setState({ isLiked: true });
+        }
+      });
   }
   render() {
     return (
@@ -135,7 +174,19 @@ class Element extends React.Component {
           PlayViz
         </button>
         {!this.state.privateCollection && (
-          <button onClick={this.handleAddToFavorites}>Add to favorites</button>
+          <>
+            {this.state.likesValue}
+            {!this.state.isLiked && (
+              <button onClick={this.handleAddToFavorites}>
+                Add to favorites
+              </button>
+            )}
+            {this.state.isLiked && (
+              <button onClick={this.handleRemoveFromFavorites}>
+                Remove from favorites
+              </button>
+            )}
+          </>
         )}
         {this.state.privateCollection && (
           <>

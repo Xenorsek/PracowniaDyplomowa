@@ -29,8 +29,8 @@ export const SidebarData = [
         cName: 'nav-text',
     }, 
     {
-        title: 'Favorities',
-        path: '/favorities',
+        title: 'Favorites',
+        path: '/favorites',
         icon: <IoIcons.IoMdThumbsUp />,
         cName: 'nav-text',
     }, 

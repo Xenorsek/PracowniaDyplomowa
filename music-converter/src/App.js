@@ -22,7 +22,7 @@ import Uploads from "./Pages/Uploads";
 import Home from "./Pages/Home";
 import Login from "./login-component/login";
 import Signup from "./signup/Signup";
-import Favorities from "./Pages/Favorities";
+import Favorites from "./Pages/Favorites";
 import {
   BrowserRouter as Router,
   Switch,
@@ -54,9 +54,9 @@ function App() {
                   {user && <Uploads />}
                   </Route>
 
-                <Route path="/favorities" component={Favorities}>
+                <Route path="/favorites" component={Favorites}>
                   {!user && <Redirect to="/" />}
-                  {user && <Favorities />}
+                  {user && <Favorites />}
                 </Route>
                 <Route path="/login">
                   {user && <Redirect to="/" />}

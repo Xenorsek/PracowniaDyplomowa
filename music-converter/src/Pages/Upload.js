@@ -71,7 +71,10 @@ class Upload extends React.Component {
     const doc = { name, notes, tempos, title, totalTime, author, publicStatus };
 
     try {
-      await projectFirestore.collection("musicSequences").add(doc).then(()=>{
+      await projectFirestore.collection("musicSequences").add(doc).then((docRef)=>{
+        docRef.update({
+          id: docRef.id
+        })
         console.log("Document successfully added!");
     }).catch((error) => {
         console.error("Error with added document: ", error);
