@@ -5,11 +5,12 @@ function Library() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
-  const canDelete = false;
+  const privateCollection = false;
   useEffect(() => {
     setIsPending(true);
     projectFirestore
       .collection("musicSequences")
+      .where("publicStatus", "==", true)
       .get()
       .then((snapshot) => {
         if (snapshot.empty) {
@@ -35,7 +36,7 @@ function Library() {
       {error && <p className="error">{error}</p>}
       {isPending && <p className="loading"> Loading...</p>}
       {data && (
-          <Elements sequences={data} canDelete = {canDelete}/>
+        <Elements sequences={data} privateCollection={privateCollection} />
       )}
     </div>
   );

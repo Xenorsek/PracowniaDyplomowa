@@ -24,20 +24,73 @@ class Element extends React.Component {
       name: this.props.name,
       key: this.props.key,
       id: this.props.seq.id,
-      canDelete: this.props.canDelete,
+      privateCollection: this.props.privateCollection,
+      publicStatus: this.props.seq.publicStatus,
     };
   }
+  handlePublic = async (e) => {
+    e.preventDefault();
+    if (!this.state.publicStatus) {
+      try {
+        await projectFirestore
+          .collection("musicSequences")
+          .doc(this.state.id)
+          .update({ publicStatus: true })
+          .then(() => {
+            console.log("Document successfully updated!");
+            this.state.publicStatus = true;
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Element is already set on public");
+    }
+  };
+
+  handlePrivate = async (e) => {
+    e.preventDefault();
+    if (this.state.publicStatus) {
+      try {
+        await projectFirestore
+          .collection("musicSequences")
+          .doc(this.state.id)
+          .update({ publicStatus: false })
+          .then(() => {
+            console.log("Document successfully updated!");
+            this.state.publicStatus = false;
+          })
+          .catch((error) => {
+            console.error("Error updating document: ", error);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Element is already set on private");
+    }
+  };
+
+  handleAddToFavorites = async (e) => {
+    e.preventDefault();
+  }
+
   handleDelete = async (e) => {
     e.preventDefault();
     try {
       await projectFirestore
         .collection("musicSequences")
         .doc(this.state.id)
-        .delete().then(()=>{
-            console.log("Document successfully deleted!");
-        }).catch((error) => {
-            console.error("Error removing document: ", error);
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
         })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +134,20 @@ class Element extends React.Component {
         >
           PlayViz
         </button>
-        {this.state.canDelete && <button onClick={this.handleDelete}>Delete</button>}
+        {!this.state.privateCollection && (
+          <button onClick={this.handleAddToFavorites}>Add to favorites</button>
+        )}
+        {this.state.privateCollection && (
+          <>
+            {!this.state.publicStatus && (
+              <button onClick={this.handlePublic}>Public</button>
+            )}
+            {this.state.publicStatus && (
+              <button onClick={this.handlePrivate}>Private</button>
+            )}
+            <button onClick={this.handleDelete}>Delete</button>
+          </>
+        )}
       </div>
     );
   }

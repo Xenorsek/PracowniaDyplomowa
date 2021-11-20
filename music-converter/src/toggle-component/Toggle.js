@@ -7,14 +7,14 @@ const Toggle = ({ theme, toggleTheme }) => {
   return (
     <ToggleContainer lightTheme={isLight} onClick={toggleTheme}>
       <img
-        src="https://image.flaticon.com/icons/svg/1164/1164954.svg"
+        src="https://www.pngall.com/wp-content/uploads/2016/07/Sun-Download-PNG.png"
         width="224"
         height="224"
         alt="Sun free icon"
         title="Sun free icon"
       />
       <img
-        src="https://image.flaticon.com/icons/svg/2033/2033921.svg"
+        src="https://www.seekpng.com/png/full/1-14651_moon-png-transparent-picture-freeuse-moon-transparent-background.png"
         width="224"
         height="224"
         alt="Moon free icon"

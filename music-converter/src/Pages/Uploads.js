@@ -8,7 +8,7 @@ function Uploads() {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
-  const canDelete = true;
+  const privateCollection = true;
   useEffect(() => {
     setIsPending(true);
     projectFirestore
@@ -36,7 +36,7 @@ function Uploads() {
     <div className="Uploads">
       {error && <p className="error">{error}</p>}
       {isPending && <p className="loading"> Loading...</p>}
-      {data && <Elements sequences={data} canDelete = {canDelete} />}
+      {data && <Elements sequences={data} privateCollection = {privateCollection} />}
     </div>
   );
 }

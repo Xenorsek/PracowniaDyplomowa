@@ -48,11 +48,13 @@ class Upload extends React.Component {
     e.preventDefault();
     var {user} = this.state.user;
     var name = "";
+    var author ="";
     if(!user){
      name = "Annonymous";
     }
     else{
       name = user.displayName
+      author = user.uid;
     }
     var notes = [];
     this.state.notes.notes.forEach((element) => {
@@ -60,14 +62,13 @@ class Upload extends React.Component {
       const startTime = element.startTime;
       const endTime = element.endTime;
       const velocity = element.velocity;
-
       notes.push({ pitch, startTime, endTime, velocity });
     });
+    const publicStatus = false;
     const tempos = this.state.notes.tempos;
     const title = this.state.title;
     const totalTime = this.state.notes.totalTime;
-    const author = user.uid;
-    const doc = { name, notes, tempos, title, totalTime, author };
+    const doc = { name, notes, tempos, title, totalTime, author, publicStatus };
 
     try {
       await projectFirestore.collection("musicSequences").add(doc).then(()=>{
