@@ -29,6 +29,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import Profil from "./Pages/Profil";
 
 const TopNavBar = withTranslation()(NavBar);
 const UploadComponent = withTranslation()(Upload);
@@ -65,6 +66,10 @@ function App() {
                 <Route path="/signup">
                   {user && <Redirect to="/" />}
                   {!user && <Signup />}
+                </Route>
+                <Route path="/profil">
+                  {!user && <Redirect to="/" />}
+                  {user && <Profil />}
                 </Route>
               </Switch>
             </Suspense>
