@@ -23,13 +23,14 @@ class NavBar extends React.Component {
     const { logout } = this.props.useLogoutValue;
     const { t } = this.props;
     const { user } = this.props.useAuthContextValue;
-    
+
     return (
       <header className="navbar">
         <div className="navbar__title navbar__item">
           <Sidenavbar />
         </div>
-        <Link to={"/"}><div className="navbar__title navbar__item">{t("title")}</div>
+        <Link to={"/"}>
+          <div className="navbar__title navbar__item">{t("title")}</div>
         </Link>
         <div className="navbar__item">
           <ChangeLanguage />
@@ -50,9 +51,11 @@ class NavBar extends React.Component {
         )}
         {user && (
           <>
-            <div className="navbar__item">{user.displayName}</div>
+            <Link to={"/profil"}>
+              <div className="navbar__item">{user.displayName}</div>
+            </Link>
             <div className="navbar__item" onClick={logout}>
-              <span>{t('Logout')}</span>
+              <span>{t("Logout")}</span>
             </div>
           </>
         )}

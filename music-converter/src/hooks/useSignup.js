@@ -47,5 +47,5 @@ export const useSignup = () => {
     };
   }, []);
   
-  return { error, isPending, signup };
+  return { error, isPending, signup, setError };
 };

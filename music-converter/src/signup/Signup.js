@@ -5,11 +5,16 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const { signup, isPending, error } = useSignup();
+  const { signup, isPending, error, setError } = useSignup();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(email, password, displayName)
+    if(displayName === "" || displayName.length < 5 || displayName == null){
+      setError("displayName can't be empty or less than 5 characters")
+    }
+    else{
+      signup(email, password, displayName)
+    }
   };
   return (
     <form onSubmit={handleSubmit} className="login-form">
