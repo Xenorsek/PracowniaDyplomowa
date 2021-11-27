@@ -38,8 +38,10 @@ class Element extends React.Component {
       publicStatus: this.props.seq.publicStatus,
       likesValue: 0,
       isLiked: false,
+      FavoritesPending: false,
     };
   }
+
   handlePublic = async (e) => {
     e.preventDefault();
     if (!this.state.publicStatus) {
@@ -88,16 +90,26 @@ class Element extends React.Component {
 
   handleAddToFavorites = async (e) => {
     e.preventDefault();
-    const { user } = this.props.useAuthContextValue;
-    this.props.useAddFavoritesValue.addToFavorites(this.props.seq.id, user.uid);
+    this.setState({ FavoritesPending: true })
+    this.props.useAddFavoritesValue.addToFavorites(this.props.seq.id, this.props.user.uid).then(() => {
+      this.setState({ FavoritesPending: false, isLiked: true })
+    }).catch((err) => {
+      console.log(err.message)
+      this.setState({ FavoritesPending: false })
+    });
   };
   handleRemoveFromFavorites = async (e) => {
     e.preventDefault();
-    const { user } = this.props.useAuthContextValue;
+    this.setState({ FavoritesPending: true })
     this.props.useRemoveFavoritesValue.removeFromFavorites(
       this.props.seq.id,
-      user.uid
-    );
+      this.props.user.uid
+    ).then(() => {
+      this.setState({ FavoritesPending: false, isLiked: false })
+    }).catch((err) => {
+      console.log(err.message)
+      this.setState({ FavoritesPending: false })
+    });
   };
   handleDelete = async (e) => {
     e.preventDefault();
@@ -135,17 +147,18 @@ class Element extends React.Component {
       .then((snapshot) => {
         this.setState({ likesValue: snapshot.size });
       });
-    const { user } = this.props.useAuthContextValue;
-    projectFirestore
-      .collection("favorites")
-      .where("musicSequences", "==", this.props.seq.id)
-      .where("user", "==", user.uid)
-      .get()
-      .then((snapshot) => {
-        if(snapshot.size > 0){
-        this.setState({ isLiked: true });
-        }
-      });
+    if (this.props.user) {
+      projectFirestore
+        .collection("favorites")
+        .where("musicSequences", "==", this.props.seq.id)
+        .where("user", "==", this.props.user.uid)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.size > 0) {
+            this.setState({ isLiked: true });
+          }
+        });
+    }
   }
   render() {
     return (
@@ -173,9 +186,9 @@ class Element extends React.Component {
         >
           PlayViz
         </button>
-        {!this.state.privateCollection && (
+        {this.state.likesValue}
+        {(this.props.user && !this.state.privateCollection) && (
           <>
-            {this.state.likesValue}
             {!this.state.isLiked && (
               <button onClick={this.handleAddToFavorites}>
                 Add to favorites
@@ -184,6 +197,11 @@ class Element extends React.Component {
             {this.state.isLiked && (
               <button onClick={this.handleRemoveFromFavorites}>
                 Remove from favorites
+              </button>
+            )}
+            {this.state.FavoritesPending && (
+              <button disabled>
+                Loading...
               </button>
             )}
           </>
