@@ -43,6 +43,7 @@ class Element extends React.Component {
       isPlaying: false,
       publicStatusLoading: false,
       isDeleted: false,
+      isPendingDelete:false,
     };
   }
 
@@ -127,20 +128,23 @@ class Element extends React.Component {
   };
   handleDelete = async (e) => {
     e.preventDefault();
+    this.setState({isPendingDelete:true})
     try {
       await projectFirestore
         .collection("musicSequences")
         .doc(this.state.id)
         .delete()
         .then(() => {
-          this.setState({ isDeleted: true })
+          this.setState({ isDeleted: true, isPendingDelete:false })
           console.log("Document successfully deleted!");
         })
         .catch((error) => {
+          this.setState({isPendingDelete:false})
           console.error("Error removing document: ", error);
         });
     } catch (err) {
       console.log(err);
+      this.setState({isPendingDelete:false})
     }
   };
   handlePlayButton = (e) => {
@@ -226,11 +230,14 @@ class Element extends React.Component {
             {this.state.publicStatusLoading && (
               <button disabled >Loading</button>
             )}
-            {this.state.isDeleted && (
+            {(this.state.isDeleted && !this.state.isPendingDelete) && (
               <button disabled>Deleted</button>
             )}
-            {!this.state.isDeleted && (
+            {(!this.state.isDeleted && !this.state.isPendingDelete) && (
               <button onClick={this.handleDelete}>Delete</button>
+            )}
+            {this.state.isPendingDelete && (
+              <button disabled>Loading</button>
             )}
           </>
         )}

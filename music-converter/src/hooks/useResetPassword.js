@@ -8,7 +8,7 @@ export const useResetPassword = () =>{
         setMessage(null);
         try{
             projectAuth.sendPasswordResetEmail(email).then(()=>{
-                setMessage("Email sended!")
+                setMessage("Email sent!")
             }).catch((error)=>{
                 setMessage(error.message)
             })

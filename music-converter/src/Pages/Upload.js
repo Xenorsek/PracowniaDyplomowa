@@ -41,7 +41,7 @@ class Upload extends React.Component {
 
     isTranscripting: false,
     isAdding: false,
-    isSendedToDatabaseAlready: false,
+    isSentToDatabaseAlready: false,
   };
   handleHaveData = () => {
     this.setState({
@@ -99,7 +99,7 @@ class Upload extends React.Component {
           id: docRef.id
         })
         console.log("Document successfully added!");
-        this.setState({ isSendedToDatabaseAlready: true })
+        this.setState({ isSentToDatabaseAlready: true })
       }).catch((error) => {
         console.error("Error with added document: ", error);
       });
@@ -167,7 +167,7 @@ class Upload extends React.Component {
         this.setState({
           notes: ns,
           isTranscripting: false,
-          isSendedToDatabaseAlready: false,
+          isSentToDatabaseAlready: false,
         });
         this.onClickShowViz();
       });
@@ -193,7 +193,7 @@ class Upload extends React.Component {
           this.setState({
             notes: ns,
             isTranscripting: false,
-            isSendedToDatabaseAlready: false
+            isSentToDatabaseAlready: false
           });
           this.onClickShowViz();
           console.log("end of Transcribing")
@@ -255,11 +255,11 @@ class Upload extends React.Component {
         {this.state.notes && (
           <>
             <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
-            {!this.state.isSendedToDatabaseAlready && (
+            {!this.state.isSentToDatabaseAlready && (
               <button onClick={this.handleSendData}>Send To DataBase</button>
             )}
-            {this.state.isSendedToDatabaseAlready && (
-              <button disabled>Sended</button>
+            {this.state.isSentToDatabaseAlready && (
+              <button disabled>Sent</button>
             )}
           </>
         )}
