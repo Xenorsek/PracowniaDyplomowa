@@ -41,10 +41,13 @@ class Element extends React.Component {
       isLiked: false,
       FavoritesPending: false,
       isPlaying: false,
+      publicStatusLoading: false,
+      isDeleted: false,
     };
   }
 
   handlePublic = async (e) => {
+    this.setState({ publicStatusLoading: true })
     e.preventDefault();
     if (!this.state.publicStatus) {
       try {
@@ -54,20 +57,24 @@ class Element extends React.Component {
           .update({ publicStatus: true })
           .then(() => {
             console.log("Document successfully updated!");
-            this.state.publicStatus = true;
+            this.setState({ publicStatus: true, publicStatusLoading: false })
           })
           .catch((error) => {
             console.error("Error updating document: ", error);
+            this.setState({ publicStatusLoading: false })
           });
       } catch (err) {
         console.log(err);
+        this.setState({ publicStatusLoading: false })
       }
     } else {
       console.log("Element is already set on public");
+      this.setState({ publicStatusLoading: false })
     }
   };
 
   handlePrivate = async (e) => {
+    this.setState({ publicStatusLoading: true })
     e.preventDefault();
     if (this.state.publicStatus) {
       try {
@@ -77,16 +84,19 @@ class Element extends React.Component {
           .update({ publicStatus: false })
           .then(() => {
             console.log("Document successfully updated!");
-            this.state.publicStatus = false;
+            this.setState({ publicStatus: false, publicStatusLoading: false })
           })
           .catch((error) => {
             console.error("Error updating document: ", error);
+            this.setState({ publicStatusLoading: false })
           });
       } catch (err) {
         console.log(err);
+        this.setState({ publicStatusLoading: false })
       }
     } else {
       console.log("Element is already set on private");
+      this.setState({ publicStatusLoading: false })
     }
   };
 
@@ -123,6 +133,7 @@ class Element extends React.Component {
         .doc(this.state.id)
         .delete()
         .then(() => {
+          this.setState({ isDeleted: true })
           console.log("Document successfully deleted!");
         })
         .catch((error) => {
@@ -132,29 +143,31 @@ class Element extends React.Component {
       console.log(err);
     }
   };
-  handlePlayButton = (e) =>{
-    if(this.state.playerViz.isPlaying()){
+  handlePlayButton = (e) => {
+    if (this.state.playerViz.isPlaying()) {
       this.state.playerViz.stop()
-      this.setState({isPlaying:false})
+      this.setState({ isPlaying: false })
     }
-    else{
+    else {
       this.state.playerViz.start(this.state.seq)
-      this.setState({isPlaying:true})
+      this.setState({ isPlaying: true })
     }
   }
 
   componentDidMount() {
-    this.state.viz = new mm.PianoRollCanvasVisualizer(
-      this.state.seq,
-      inputEl.current
-    );
-    this.state.playerViz = new mm.Player(false, {
-      run: (note) => this.state.viz.redraw(note),
-      stop: () => {
-        console.log("done");
-        this.setState({isPlaying:false})
-      },
-    });
+    this.setState({
+      viz: new mm.PianoRollCanvasVisualizer(
+        this.state.seq,
+        inputEl.current
+      ),
+      playerViz: new mm.Player(false, {
+        run: (note) => this.state.viz.redraw(note),
+        stop: () => {
+          console.log("done");
+          this.setState({ isPlaying: false })
+        },
+      })
+    })
     projectFirestore
       .collection("favorites")
       .where("musicSequences", "==", this.props.seq.id)
@@ -201,16 +214,24 @@ class Element extends React.Component {
           {this.state.isPlaying && (<BsIcon.BsPauseCircleFill className="heartIcon" />)}
           {!this.state.isPlaying && (<BsIcon.BsFillPlayCircleFill className="heartIcon" />)}
         </div>
-       
+
         {this.state.privateCollection && (
           <>
-            {!this.state.publicStatus && (
+            {(!this.state.publicStatus && !this.state.publicStatusLoading) && (
               <button onClick={this.handlePublic}>Public</button>
             )}
-            {this.state.publicStatus && (
+            {(this.state.publicStatus && !this.state.publicStatusLoading) && (
               <button onClick={this.handlePrivate}>Private</button>
             )}
-            <button onClick={this.handleDelete}>Delete</button>
+            {this.state.publicStatusLoading && (
+              <button disabled >Loading</button>
+            )}
+            {this.state.isDeleted && (
+              <button disabled>Deleted</button>
+            )}
+            {!this.state.isDeleted && (
+              <button onClick={this.handleDelete}>Delete</button>
+            )}
           </>
         )}
       </div>

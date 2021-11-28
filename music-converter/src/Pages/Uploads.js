@@ -31,7 +31,7 @@ function Uploads() {
         setError(err.message);
         setIsPending(false);
       });
-  }, []);
+  }, [user.uid]);
   return (
     <div className="Uploads">
       {error && <p className="error">{error}</p>}

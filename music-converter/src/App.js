@@ -49,7 +49,12 @@ function App() {
               <Switch>
                 <Route exact={true} path="/" component={Home} />
                 <Route path="/library" component={Library} />
-                <Route path="/upload" component={UploadComponent} />
+                
+                <Route path="/upload">
+                  {!user && <Redirect to="/"/>}
+                  {user && <UploadComponent />}
+                </Route>
+
                 <Route path="/uploads" component={Uploads} >
                 {!user && <Redirect to="/" />}
                   {user && <Uploads />}
