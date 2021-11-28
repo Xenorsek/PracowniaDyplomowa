@@ -1,6 +1,5 @@
 import React from "react";
 import * as RiIcons from "react-icons/ri";
-import * as AiIcons from "react-icons/ai";
 import * as BsIcons from "react-icons/bs";
 
 import * as mm from "@magenta/music";
@@ -50,13 +49,18 @@ class Upload extends React.Component {
     });
   };
   handlePlayButton = (e) => {
-    if (this.state.playerViz.isPlaying()) {
-      this.state.playerViz.stop()
-      this.setState({ isPlaying: false })
+    if (this.state.isTranscripting || !this.state.haveData) {
+      console.log("You can't do that")
     }
     else {
-      this.state.playerViz.start(this.state.notes)
-      this.setState({ isPlaying: true })
+      if (this.state.playerViz.isPlaying()) {
+        this.state.playerViz.stop()
+        this.setState({ isPlaying: false })
+      }
+      else {
+        this.state.playerViz.start(this.state.notes)
+        this.setState({ isPlaying: true })
+      }
     }
   }
 
@@ -95,7 +99,7 @@ class Upload extends React.Component {
           id: docRef.id
         })
         console.log("Document successfully added!");
-        this.setState({isSendedToDatabaseAlready:true})
+        this.setState({ isSendedToDatabaseAlready: true })
       }).catch((error) => {
         console.error("Error with added document: ", error);
       });
@@ -117,10 +121,10 @@ class Upload extends React.Component {
   };
 
   setRecordingBroken = () => {
-    if (this.state.recordingBroken == false) {
-      this.state.recordingBroken = true;
+    if (this.state.recordingBroken === false) {
+      this.setState({ recordingBroken: true });
     } else {
-      this.state.recordingBroken = false;
+      this.setState({ recordingBroken: false });
     }
   };
 
@@ -140,7 +144,7 @@ class Upload extends React.Component {
     } else {
       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
         this.setIsRecord();
-        this.state.recorder = new MediaRecorder(stream);
+        this.setState({ recorder: new MediaRecorder(stream) });
         this.state.recorder.start();
         console.log(this.state.recorder.state);
       });
@@ -163,7 +167,7 @@ class Upload extends React.Component {
         this.setState({
           notes: ns,
           isTranscripting: false,
-          isSendedToDatabaseAlready:false,
+          isSendedToDatabaseAlready: false,
         });
         this.onClickShowViz();
       });
@@ -189,7 +193,7 @@ class Upload extends React.Component {
           this.setState({
             notes: ns,
             isTranscripting: false,
-            isSendedToDatabaseAlready:false
+            isSendedToDatabaseAlready: false
           });
           this.onClickShowViz();
           console.log("end of Transcribing")
@@ -197,17 +201,19 @@ class Upload extends React.Component {
     });
   };
   onClickShowViz = () => {
-    this.state.viz = new mm.PianoRollCanvasVisualizer(
-      this.state.notes,
-      inputEl.current
-    );
-    this.state.playerViz = new mm.Player(false, {
-      run: (note) => this.state.viz.redraw(note),
-      stop: () => {
-        console.log("done");
-        this.setState({ isPlaying: false })
-      },
-    });
+    this.setState({
+      viz: new mm.PianoRollCanvasVisualizer(
+        this.state.notes,
+        inputEl.current
+      ),
+      playerViz: new mm.Player(false, {
+        run: (note) => this.state.viz.redraw(note),
+        stop: () => {
+          console.log("done");
+          this.setState({ isPlaying: false })
+        },
+      })
+    })
     this.handleHaveData();
   };
   render() {
@@ -216,20 +222,24 @@ class Upload extends React.Component {
       <div>
         <div className="record-element">
           <h1>{t("pickFile")}</h1>
-          <RiIcons.RiUploadLine onClick={this.handleAddFile} />
-          <input
-            type="file"
-            onChange={this.onFileChange}
-            id="fileInput"
-            ref={hiddenFileInput}
-            style={{ display: "none" }}
-          />
+          <div className="Recorder">
+            <RiIcons.RiUploadLine className="HeartIcon" onClick={this.handleAddFile} />
+            <input
+              type="file"
+              onChange={this.onFileChange}
+              id="fileInput"
+              ref={hiddenFileInput}
+              style={{ display: "none" }}
+            />
+          </div>
         </div>
 
         <div className="record-element">
           <h1>{t("Recorder")}</h1>
-          {this.state.isRecording && (<BsIcons.BsMicFill onClick={this.onClickMic} />)}
-          {!this.state.isRecording && (<BsIcons.BsMic onClick={this.onClickMic} />)}
+          <div className="Recorder">
+            {this.state.isRecording && (<BsIcons.BsMicFill className="HeartIcon" onClick={this.onClickMic} />)}
+            {!this.state.isRecording && (<BsIcons.BsMic className="HeartIcon" onClick={this.onClickMic} />)}
+          </div>
         </div>
 
         <div className="record-element" style={{ textAlign: "center" }}>
@@ -246,10 +256,10 @@ class Upload extends React.Component {
           <>
             <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
             {!this.state.isSendedToDatabaseAlready && (
-            <button onClick={this.handleSendData}>Send To DataBase</button>
+              <button onClick={this.handleSendData}>Send To DataBase</button>
             )}
             {this.state.isSendedToDatabaseAlready && (
-            <button disabled>Sended</button>
+              <button disabled>Sended</button>
             )}
           </>
         )}

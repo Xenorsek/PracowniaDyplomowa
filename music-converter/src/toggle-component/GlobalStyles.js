@@ -32,6 +32,10 @@ export const GlobalStyles = createGlobalStyle`
     position:absolute;
     margin-left:5px;
   }
+  .Recorder{
+    width:50px;
+    height:50px;
+  }
   body {
     display:list-item;
     flex-direction: column;
