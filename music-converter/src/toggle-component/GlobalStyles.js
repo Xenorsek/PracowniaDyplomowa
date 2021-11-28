@@ -11,6 +11,27 @@ export const GlobalStyles = createGlobalStyle`
     color:white;
     text-decoration: none; /* no underline */
   }
+  .playButton{
+    width:45px;
+    height:45px;
+    cursor:pointer;
+  }
+  .musicSequence{
+    cursor:pointer;
+  }
+  .HeartIcon{
+    width:100%;
+    height:100%;
+  }
+  .HeartIconBox{
+    width:30px;
+    height:30px;
+    cursor:pointer;
+  } 
+  .likeValue{
+    position:absolute;
+    margin-left:5px;
+  }
   body {
     display:list-item;
     flex-direction: column;

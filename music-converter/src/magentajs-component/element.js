@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { projectFirestore } from "../firebase/config";
 import { useAddFavorites } from "../hooks/useAddFavorites";
 import { useRemoveFavorites } from "../hooks/useRemoveFavorites";
+import * as BsIcon from "react-icons/bs";
 function withMyHooks(Component) {
   return function WrappedComponent(props) {
     const useAuthContextValue = useAuthContext();
@@ -39,6 +40,7 @@ class Element extends React.Component {
       likesValue: 0,
       isLiked: false,
       FavoritesPending: false,
+      isPlaying: false,
     };
   }
 
@@ -92,7 +94,8 @@ class Element extends React.Component {
     e.preventDefault();
     this.setState({ FavoritesPending: true })
     this.props.useAddFavoritesValue.addToFavorites(this.props.seq.id, this.props.user.uid).then(() => {
-      this.setState({ FavoritesPending: false, isLiked: true })
+      let increment = this.state.likesValue + 1;
+      this.setState({ FavoritesPending: false, isLiked: true, likesValue: increment })
     }).catch((err) => {
       console.log(err.message)
       this.setState({ FavoritesPending: false })
@@ -105,7 +108,8 @@ class Element extends React.Component {
       this.props.seq.id,
       this.props.user.uid
     ).then(() => {
-      this.setState({ FavoritesPending: false, isLiked: false })
+      let decrement = this.state.likesValue - 1;
+      this.setState({ FavoritesPending: false, isLiked: false, likesValue: decrement })
     }).catch((err) => {
       console.log(err.message)
       this.setState({ FavoritesPending: false })
@@ -128,6 +132,16 @@ class Element extends React.Component {
       console.log(err);
     }
   };
+  handlePlayButton = (e) =>{
+    if(this.state.playerViz.isPlaying()){
+      this.state.playerViz.stop()
+      this.setState({isPlaying:false})
+    }
+    else{
+      this.state.playerViz.start(this.state.seq)
+      this.setState({isPlaying:true})
+    }
+  }
 
   componentDidMount() {
     this.state.viz = new mm.PianoRollCanvasVisualizer(
@@ -138,6 +152,7 @@ class Element extends React.Component {
       run: (note) => this.state.viz.redraw(note),
       stop: () => {
         console.log("done");
+        this.setState({isPlaying:false})
       },
     });
     projectFirestore
@@ -163,49 +178,30 @@ class Element extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.state.name}</h1>
-        <canvas ref={inputEl} />
         <div>
-          <h1>{this.state.title}</h1>
+          <h1>Title: {this.state.title}</h1>
+          <h5>By: {this.state.name}</h5>
         </div>
-        <button
-          onClick={() => {
-            this.state.player.isPlaying()
-              ? this.state.player.stop()
-              : this.state.player.start(this.state.seq);
-          }}
-        >
-          Play
-        </button>
-        <button
-          onClick={() => {
-            this.state.playerViz.isPlaying()
-              ? this.state.playerViz.stop()
-              : this.state.playerViz.start(this.state.seq);
-          }}
-        >
-          PlayViz
-        </button>
-        {this.state.likesValue}
         {(this.props.user && !this.state.privateCollection) && (
           <>
-            {!this.state.isLiked && (
-              <button onClick={this.handleAddToFavorites}>
-                Add to favorites
-              </button>
+            {(!this.state.isLiked && !this.state.FavoritesPending) && (
+              <div className="HeartIconBox" onClick={this.handleAddToFavorites}><BsIcon.BsHeart className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
+
             )}
-            {this.state.isLiked && (
-              <button onClick={this.handleRemoveFromFavorites}>
-                Remove from favorites
-              </button>
+            {(this.state.isLiked && !this.state.FavoritesPending) && (
+              <div className="HeartIconBox" onClick={this.handleRemoveFromFavorites}><BsIcon.BsHeartFill className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
             )}
             {this.state.FavoritesPending && (
-              <button disabled>
-                Loading...
-              </button>
+              <div className="HeartIconBox"><BsIcon.BsHeartHalf className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
             )}
           </>
         )}
+        <canvas onClick={this.handlePlayButton} className="musicSequence" ref={inputEl} />
+        <div className="playButton" onClick={this.handlePlayButton}>
+          {this.state.isPlaying && (<BsIcon.BsPauseCircleFill className="heartIcon" />)}
+          {!this.state.isPlaying && (<BsIcon.BsFillPlayCircleFill className="heartIcon" />)}
+        </div>
+       
         {this.state.privateCollection && (
           <>
             {!this.state.publicStatus && (

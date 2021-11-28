@@ -10,6 +10,8 @@ function Library() {
     setIsPending(true);
     projectFirestore
       .collection("musicSequences")
+      .orderBy('date','asc')
+      .limit(20)
       .where("publicStatus", "==", true)
       .get()
       .then((snapshot) => {

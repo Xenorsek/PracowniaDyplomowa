@@ -24,7 +24,7 @@ const hiddenFileInput = React.createRef(null);
 const blob = [];
 class Upload extends React.Component {
   state = {
-    user : this.props.useAuthContextValue,
+    user: this.props.useAuthContextValue,
     title: "Type title here",
     selectedFile: null,
     model: new mm.OnsetsAndFrames(
@@ -38,21 +38,39 @@ class Upload extends React.Component {
     isRecording: false,
     recordingBroken: false,
     haveData: false,
+    isPlaying: false,
+
+    isTranscripting: false,
+    isAdding: false,
+    isSendedToDatabaseAlready: false,
   };
   handleHaveData = () => {
     this.setState({
       haveData: true,
     });
   };
-  handleSendData = async (e) => {
-    e.preventDefault();
-    var {user} = this.state.user;
-    var name = "";
-    var author ="";
-    if(!user){
-     name = "Annonymous";
+  handlePlayButton = (e) => {
+    if (this.state.playerViz.isPlaying()) {
+      this.state.playerViz.stop()
+      this.setState({ isPlaying: false })
     }
-    else{
+    else {
+      this.state.playerViz.start(this.state.notes)
+      this.setState({ isPlaying: true })
+    }
+  }
+
+
+  handleSendData = async (e) => {
+
+    e.preventDefault();
+    var { user } = this.state.user;
+    var name = "";
+    var author = "";
+    if (!user) {
+      name = "Annonymous";
+    }
+    else {
       name = user.displayName
       author = user.uid;
     }
@@ -68,26 +86,34 @@ class Upload extends React.Component {
     const tempos = this.state.notes.tempos;
     const title = this.state.title;
     const totalTime = this.state.notes.totalTime;
-    const doc = { name, notes, tempos, title, totalTime, author, publicStatus };
+    const date = new Date();
+    const doc = { name, notes, tempos, title, totalTime, author, publicStatus, date };
 
     try {
-      await projectFirestore.collection("musicSequences").add(doc).then((docRef)=>{
+      await projectFirestore.collection("musicSequences").add(doc).then((docRef) => {
         docRef.update({
           id: docRef.id
         })
         console.log("Document successfully added!");
-    }).catch((error) => {
+        this.setState({isSendedToDatabaseAlready:true})
+      }).catch((error) => {
         console.error("Error with added document: ", error);
-    });
+      });
     } catch (err) {
       console.log(err);
     }
   };
   handleAddFile = () => {
-    hiddenFileInput.current.click();
+    if (!this.state.isTranscripting && !this.state.isRecording) {
+      hiddenFileInput.current.click();
+    }
+    if (this.state.isRecording) {
+      console.log("Jesteś w trakcie nagrywania")
+    }
   };
   setIsRecord = () => {
-    this.state.isRecording = !this.state.isRecording;
+    this.setState({ isRecording: !this.state.isRecording })
+    //this.state.isRecording = !this.state.isRecording;
   };
 
   setRecordingBroken = () => {
@@ -99,9 +125,11 @@ class Upload extends React.Component {
   };
 
   onClickMic = () => {
-    this.state.isRecording
-      ? this.onStopRecordButtonClick()
-      : this.onStartRecordButtonClick();
+    if (!this.state.isTranscripting) {
+      this.state.isRecording
+        ? this.onStopRecordButtonClick()
+        : this.onStartRecordButtonClick();
+    }
   };
 
   onStartRecordButtonClick = () => {
@@ -129,18 +157,21 @@ class Upload extends React.Component {
   };
 
   onClickTrascriptFromMic = () => {
+    this.setState({ isTranscripting: true })
     this.state.model.initialize().then(() => {
       this.state.model.transcribeFromAudioFile(blob[0]).then((ns) => {
         this.setState({
           notes: ns,
+          isTranscripting: false,
+          isSendedToDatabaseAlready:false,
         });
         this.onClickShowViz();
       });
     });
   };
 
-  handleChangeTitle = (event) =>{
-    this.setState({title: event.target.value})
+  handleChangeTitle = (event) => {
+    this.setState({ title: event.target.value })
   }
 
   onFileChange = (event) => {
@@ -149,14 +180,19 @@ class Upload extends React.Component {
   };
 
   onTranscribe = () => {
+    this.setState({ isTranscripting: true })
+    console.log("isTranscribing");
     this.state.model.initialize().then(() => {
       this.state.model
         .transcribeFromAudioFile(this.state.selectedFile)
         .then((ns) => {
           this.setState({
             notes: ns,
+            isTranscripting: false,
+            isSendedToDatabaseAlready:false
           });
           this.onClickShowViz();
+          console.log("end of Transcribing")
         });
     });
   };
@@ -169,6 +205,7 @@ class Upload extends React.Component {
       run: (note) => this.state.viz.redraw(note),
       stop: () => {
         console.log("done");
+        this.setState({ isPlaying: false })
       },
     });
     this.handleHaveData();
@@ -191,25 +228,29 @@ class Upload extends React.Component {
 
         <div className="record-element">
           <h1>{t("Recorder")}</h1>
-          <BsIcons.BsMic onClick={this.onClickMic} />
+          {this.state.isRecording && (<BsIcons.BsMicFill onClick={this.onClickMic} />)}
+          {!this.state.isRecording && (<BsIcons.BsMic onClick={this.onClickMic} />)}
         </div>
 
         <div className="record-element" style={{ textAlign: "center" }}>
           {this.state.haveData && (
-            <AiIcons.AiOutlinePlayCircle
-              onClick={() => {
-                this.state.playerViz.isPlaying()
-                  ? this.state.playerViz.stop()
-                  : this.state.playerViz.start(this.state.notes);
-              }}
-            />
+            <div onClick={this.handlePlayButton}>
+              {this.state.isPlaying && (<BsIcons.BsPauseCircleFill />)}
+              {!this.state.isPlaying && (<BsIcons.BsFillPlayCircleFill />)}
+            </div>
           )}
-          <canvas ref={inputEl} />
+          {this.state.isTranscripting && (<div>isTranscripting...</div>)}
+          <canvas onClick={this.handlePlayButton} className="musicSequence" ref={inputEl} />
         </div>
         {this.state.notes && (
           <>
-          <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
-          <button onClick={this.handleSendData}>Send To DataBase</button>
+            <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
+            {!this.state.isSendedToDatabaseAlready && (
+            <button onClick={this.handleSendData}>Send To DataBase</button>
+            )}
+            {this.state.isSendedToDatabaseAlready && (
+            <button disabled>Sended</button>
+            )}
           </>
         )}
       </div>
