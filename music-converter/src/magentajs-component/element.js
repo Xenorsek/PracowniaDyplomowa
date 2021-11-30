@@ -196,7 +196,7 @@ class Element extends React.Component {
     return (
       <div>
         <div>
-          <h1>Title: {this.state.title}</h1>
+          <h1>{this.state.title}</h1>
           <h5>By: {this.state.name}</h5>
         </div>
         {(this.props.user && !this.state.privateCollection) && (

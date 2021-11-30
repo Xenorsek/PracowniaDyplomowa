@@ -53,8 +53,8 @@ export default function Login() {
           <input type="email"
             onChange={(e) => setEmailToResetPassword(e.target.value)}
             value={emailToResetPassword} />
-            {message == "Email sent!" &&(<button disabled className="btn">Poszło</button>)}
-            {(!message || message != "Email sent!") &&(<button className="btn">Odzyskaj hasło</button>)}
+            {message === "Email sent!" &&(<button disabled className="btn">Poszło</button>)}
+            {(!message || message !== "Email sent!") &&(<button className="btn">Odzyskaj hasło</button>)}
             {message && <p>{message}</p>}
         </label>
         </form>
