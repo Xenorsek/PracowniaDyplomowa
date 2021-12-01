@@ -42,6 +42,9 @@ class Upload extends React.Component {
     isTranscripting: false,
     isAdding: false,
     isSentToDatabaseAlready: false,
+    timer: 0,
+    maxLength: 30,
+    error: null,
   };
   handleHaveData = () => {
     this.setState({
@@ -137,6 +140,7 @@ class Upload extends React.Component {
   };
 
   onStartRecordButtonClick = () => {
+    this.setState({error:null})
     blob.pop();
     if (this.state.isRecording) {
       this.setIsRecord();
@@ -147,9 +151,21 @@ class Upload extends React.Component {
         this.setState({ recorder: new MediaRecorder(stream) });
         this.state.recorder.start();
         console.log(this.state.recorder.state);
+        this.setState({ timer: setTimeout(this.afterMaxLengthTimer, this.state.maxLength * 1000) })
       });
     }
   };
+
+  afterMaxLengthTimer = () => {
+    if (this.state.recorder.state == 'recording') {
+      this.state.recorder.stop();
+      //przechowywanie danych w blob
+      this.state.recorder.ondataavailable = (e) => blob.push(e.data);
+      console.log(this.state.recorder.state);
+      this.setIsRecord();
+      this.onClickTrascriptFromMic();
+    }
+  }
 
   onStopRecordButtonClick = () => {
     this.state.recorder.stop();
@@ -179,8 +195,16 @@ class Upload extends React.Component {
   }
 
   onFileChange = (event) => {
-    this.setState({ selectedFile: event.target.files[0] });
-    this.onTranscribe();
+    this.setState({error:null})
+    if(event.target.files[0].type.includes("audio") || event.target.files[0].type.includes("mp3") || event.target.files[0].type.includes("music")){
+      this.setState({ selectedFile: event.target.files[0] });
+      this.onTranscribe();
+    }
+else{
+  let type = event.target.files[0].type;
+  this.setState({error:"the file format "+type+" is not supported"})
+}
+
   };
 
   onTranscribe = () => {
@@ -204,7 +228,11 @@ class Upload extends React.Component {
     this.setState({
       viz: new mm.PianoRollCanvasVisualizer(
         this.state.notes,
-        inputEl.current
+        inputEl.current, {
+        noteRGB: '0, 0, 0',
+        activeNoteRGB: '235, 65, 167',
+        pixelsPerTimeStep: 40,
+      }
       ),
       playerViz: new mm.Player(false, {
         run: (note) => this.state.viz.redraw(note),
@@ -240,8 +268,9 @@ class Upload extends React.Component {
             {this.state.isRecording && (<BsIcons.BsMicFill className="HeartIcon" onClick={this.onClickMic} />)}
             {!this.state.isRecording && (<BsIcons.BsMic className="HeartIcon" onClick={this.onClickMic} />)}
           </div>
+          <h6>Max {this.state.maxLength} seconds</h6>
         </div>
-
+        {this.state.error && this.state.error}
         <div className="record-element" style={{ textAlign: "center" }}>
           {this.state.haveData && (
             <div onClick={this.handlePlayButton}>
