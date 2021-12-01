@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import './Sidebar.css';
 import {IconContext} from'react-icons';
-
+import { useAuthContext } from "../hooks/useAuthContext";
 function Sidenavbar() {
   const [ sidebar, setSidebar ] = useState(false);
-
+  const {user} = useAuthContext();
   const showSidebar = () => setSidebar(!sidebar);
   return (
     <div>
@@ -25,7 +25,8 @@ function Sidenavbar() {
               <AiIcons.AiOutlineClose onClick={showSidebar}/>
             </Link>
           </li>
-          {SidebarData.map((item, index) => {
+          {!user && (
+          SidebarData.filter(item => item.auth ===false).map((item, index) => {
             return (
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
@@ -34,7 +35,20 @@ function Sidenavbar() {
                 </Link>
               </li>
             );
-          })}
+          })
+          )}
+          {user && (
+          SidebarData.map((item, index) => {
+            return (
+              <li key={index} className={item.cName}>
+                <Link to={item.path}>
+                  {item.icon}
+                  <span>{item.title}</span>
+                </Link>
+              </li>
+            );
+          })
+          )}
         </ul>
       </nav>
       </IconContext.Provider>
