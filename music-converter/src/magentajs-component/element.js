@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { projectFirestore } from "../firebase/config";
 import { useAddFavorites } from "../hooks/useAddFavorites";
 import { useRemoveFavorites } from "../hooks/useRemoveFavorites";
+import * as Tone from "tone"
 import * as BsIcon from "react-icons/bs";
 function withMyHooks(Component) {
   return function WrappedComponent(props) {
@@ -43,7 +44,7 @@ class Element extends React.Component {
       isPlaying: false,
       publicStatusLoading: false,
       isDeleted: false,
-      isPendingDelete:false,
+      isPendingDelete: false,
     };
   }
 
@@ -128,34 +129,40 @@ class Element extends React.Component {
   };
   handleDelete = async (e) => {
     e.preventDefault();
-    this.setState({isPendingDelete:true})
+    this.setState({ isPendingDelete: true })
     try {
       await projectFirestore
         .collection("musicSequences")
         .doc(this.state.id)
         .delete()
         .then(() => {
-          this.setState({ isDeleted: true, isPendingDelete:false })
+          this.setState({ isDeleted: true, isPendingDelete: false })
           console.log("Document successfully deleted!");
         })
         .catch((error) => {
-          this.setState({isPendingDelete:false})
+          this.setState({ isPendingDelete: false })
           console.error("Error removing document: ", error);
         });
     } catch (err) {
       console.log(err);
-      this.setState({isPendingDelete:false})
+      this.setState({ isPendingDelete: false })
     }
   };
   handlePlayButton = (e) => {
-    if (this.state.playerViz.isPlaying()) {
-      this.state.playerViz.stop()
-      this.setState({ isPlaying: false })
-    }
-    else {
-      this.state.playerViz.start(this.state.seq)
-      this.setState({ isPlaying: true })
-    }
+      Tone.start()
+      if (this.state.playerViz.isPlaying()) {
+        this.state.playerViz.stop()
+        this.setState({ isPlaying: false })
+      }
+      else {
+        if (Tone.Transport.state !== "stopped") {
+          console.log("You can't play more than one at the same momment")
+        }
+        else{
+        this.state.playerViz.start(this.state.seq)
+        this.setState({ isPlaying: true })
+        }
+      }
   }
 
   componentDidMount() {
@@ -203,7 +210,6 @@ class Element extends React.Component {
           <>
             {(!this.state.isLiked && !this.state.FavoritesPending) && (
               <div className="HeartIconBox" onClick={this.handleAddToFavorites}><BsIcon.BsHeart className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
-
             )}
             {(this.state.isLiked && !this.state.FavoritesPending) && (
               <div className="HeartIconBox" onClick={this.handleRemoveFromFavorites}><BsIcon.BsHeartFill className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
