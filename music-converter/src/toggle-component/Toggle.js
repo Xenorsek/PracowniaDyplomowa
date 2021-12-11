@@ -37,7 +37,7 @@ const ToggleContainer = styled.button`
   padding: 0.5rem;
   overflow: hidden;
   cursor: pointer;
-
+top:-65px;
   img {
     max-width: 2.5rem;
     height: auto;

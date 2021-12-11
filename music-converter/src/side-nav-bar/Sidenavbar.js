@@ -1,9 +1,11 @@
 import React,{useState} from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import * as IoIcons from "react-icons/io";
+import * as BiIcons from "react-icons/bi";
+import * as SiIcons from "react-icons/si";
 import { Link } from "react-router-dom";
 import i18n from "../i18n/i18n";
-import * as IoIcons from "react-icons/io";
 import './Sidebar.css';
 import {IconContext} from'react-icons';
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -16,35 +18,35 @@ function Sidenavbar() {
     {
         title: i18n.t('NavBar.0.Home'),
         path: '/',
-        icon: <AiIcons.AiFillPlusCircle />,
+        icon: <AiIcons.AiFillHome />,
         cName: 'nav-text',
         auth: false,
     }, 
     {
         title: i18n.t('NavBar.1.Library'),
         path: '/library',
-        icon: <AiIcons.AiFillPlusCircle />,
+        icon: <BiIcons.BiLibrary />,
         cName: 'nav-text',
         auth: false,
     }, 
     {
         title: i18n.t('NavBar.2.Upload'),
         path: '/upload',
-        icon: <AiIcons.AiFillDatabase />,
+        icon: <FaIcons.FaPlusCircle />,
         cName: 'nav-text',
         auth: true,
     }, 
     {
         title: i18n.t('NavBar.3.Uploads'),
         path: '/uploads',
-        icon: <AiIcons.AiFillStar />,
+        icon: <SiIcons.SiGooglemybusiness />,
         cName: 'nav-text',
         auth: true,
     }, 
     {
         title: i18n.t('NavBar.4.Favorites'),
         path: '/favorites',
-        icon: <IoIcons.IoMdThumbsUp />,
+        icon: < AiIcons.AiFillStar/>,
         cName: 'nav-text',
         auth: true,
     }, 
