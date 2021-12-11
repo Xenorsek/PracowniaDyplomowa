@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Elements from "../magentajs-component/elements";
 import { projectFirestore } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+import i18n from "../i18n/i18n";
+import { Translation } from 'react-i18next';
 function Uploads({theme}) {
   const { user } = useAuthContext();
   const [data, setData] = useState(null);
@@ -17,7 +18,7 @@ function Uploads({theme}) {
     projectFirestore.collection("musicSequences").orderBy('date','desc').startAfter(lastVisible).limit(limit).where("author", "==", user.uid).get()
       .then((snapshot) => {
         if (snapshot.empty) {
-          setUpToDate("You are up to date!");
+          setUpToDate(i18n.t('UpToDate'));
           setIsPending(false);
         }
         let results = data;
@@ -62,12 +63,12 @@ function Uploads({theme}) {
       {error && <p className="error">{error}</p>}
       {data && <Elements sequences={data} privateCollection={privateCollection} theme={theme} />}
       {isPending && <p className="loading"> Loading...</p>}
-      {UpToDate && <p>{UpToDate}</p>}
-      {!UpToDate && !isPending &&
-        <div className="loadMore">
-          <button onClick={setSecond}>Load more</button>
-        </div>
-      }
+      <div className="loadMore">
+        {UpToDate && <p>{UpToDate}</p>}
+        {!UpToDate && !isPending &&
+          <button onClick={setSecond}><Translation>{(t, { i18n }) => <>{i18n.t('LoadMore')}</>}</Translation></button>
+        }
+      </div>
     </div>
   );
 }

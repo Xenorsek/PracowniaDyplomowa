@@ -42,7 +42,9 @@ i18n
             { "WriteYourEmail": "Write your email adress" },
             {"Done":"Done"},
             {"RecoverPassword":" Recover password"},
-          ]
+          ],
+          UpToDate:"You are up date",
+          LoadMore:"Load more"
         },
       },
       pl: {
@@ -74,7 +76,9 @@ i18n
             { "WriteYourEmail": "Podaj swój adres email" },
             {"Done":"Poszło"},
             {"RecoverPassword":"Odzyskaj hasło"},
-          ]
+          ],
+          UpToDate:"Jesteś na bierząco",
+          LoadMore:"Załaduj więcej",
         },
       },
     },
