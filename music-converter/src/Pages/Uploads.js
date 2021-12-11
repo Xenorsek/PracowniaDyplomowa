@@ -14,7 +14,7 @@ function Uploads({theme}) {
   const limit = 5;
   function setSecond() {
     setIsPending(true);
-    projectFirestore.collection("musicSequences").orderBy('date').startAfter(lastVisible).limit(limit).where("author", "==", user.uid).get()
+    projectFirestore.collection("musicSequences").orderBy('date','desc').startAfter(lastVisible).limit(limit).where("author", "==", user.uid).get()
       .then((snapshot) => {
         if (snapshot.empty) {
           setUpToDate("You are up to date!");
