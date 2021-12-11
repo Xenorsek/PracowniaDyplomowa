@@ -157,7 +157,7 @@ class Upload extends React.Component {
   };
 
   afterMaxLengthTimer = () => {
-    if (this.state.recorder.state == 'recording') {
+    if (this.state.recorder.state === 'recording') {
       this.state.recorder.stop();
       //przechowywanie danych w blob
       this.state.recorder.ondataavailable = (e) => blob.push(e.data);
