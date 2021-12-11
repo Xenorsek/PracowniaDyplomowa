@@ -4,6 +4,8 @@ import Sidenavbar from "../side-nav-bar/Sidenavbar";
 import { Link } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Translation } from 'react-i18next';
+
 function withMyHooks(Component) {
   return function WrappedComponent(props) {
     const useLogoutValue = useLogout();
@@ -19,6 +21,7 @@ function withMyHooks(Component) {
 }
 
 class NavBar extends React.Component {
+  
   render() {
     const { logout } = this.props.useLogoutValue;
     const { t } = this.props;
@@ -30,7 +33,7 @@ class NavBar extends React.Component {
           <Sidenavbar />
         </div>
         <Link to={"/"}>
-          <div className="navbar__title navbar__item">{t("title")}</div>
+          <div className="navbar__title navbar__item"><Translation>{(t,{i18n})=><span>{i18n.t('title')}</span>}</Translation></div>
         </Link>
         <div className="navbar__item">
           <ChangeLanguage />
@@ -39,12 +42,12 @@ class NavBar extends React.Component {
           <>
             <div className="navbar__item">
               <Link to={"/login"}>
-                <span>{t("Login")}</span>
+              <Translation>{(t,{i18n})=><span>{i18n.t('Login')}</span>}</Translation>
               </Link>
             </div>
             <Link to={"/signup"}>
               <div className="navbar__item">
-                <span>{t("Signup")}</span>
+              <Translation>{(t,{i18n})=><span>{i18n.t('Signup')}</span>}</Translation>
               </div>
             </Link>
           </>
