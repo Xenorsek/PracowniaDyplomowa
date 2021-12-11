@@ -1,6 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
+const languageDetector = new LanguageDetector();
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
@@ -22,6 +24,25 @@ i18n
           Logout: "Logout",
           pickFile: "Pick File",
           Recorder: "Recorder",
+          Home: "Home",
+          NavBar: [
+            { "Home": "Home page" },
+            { "Library": "Library" },
+            { "Upload": "Upload" },
+            { "Uploads": " Your Uploads" },
+            { "Favorites": " Your Favorites" }
+          ],
+          Login2: [
+            { "Signup": "Signup" },
+            { "Login": "Login" },
+            { "Password": "Password" },
+            { "Email": "Email" },
+            { "DisplayName": " Display name" },
+            { "ResetPassword": "Forgot password?" },
+            { "WriteYourEmail": "Write your email adress" },
+            {"Done":"Done"},
+            {"RecoverPassword":" Recover password"},
+          ]
         },
       },
       pl: {
@@ -35,11 +56,30 @@ i18n
           Logout: "Wyloguj",
           pickFile: "Wybierz plik",
           Recorder: "Nagrywarka",
+          Home: "Strona domowa",
+          NavBar: [
+            { "Home": "Strona domowa" },
+            { "Library": "Biblioteka" },
+            { "Upload": "Konwerter" },
+            { "Uploads": "Twoje konwerty" },
+            { "Favorites": "Twoje ulubione" }
+          ],
+          Login2: [
+            { "Signup": "Zarejestruj" },
+            { "Login": "Zaloguj" },
+            { "Password": "Hasło" },
+            { "Email": "Email" },
+            { "DisplayName": "Widoczna nazwa" },
+            { "ResetPassword": "Zapomniałeś hasła?" },
+            { "WriteYourEmail": "Podaj swój adres email" },
+            {"Done":"Poszło"},
+            {"RecoverPassword":"Odzyskaj hasło"},
+          ]
         },
       },
     },
-    fallbackLng: "pl",
-
+    fallbackLng: "en",
+    load: "languageOnly",
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
