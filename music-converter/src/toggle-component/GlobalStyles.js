@@ -31,6 +31,7 @@ export const GlobalStyles = createGlobalStyle`
   .likeValue{
     position:absolute;
     margin-left:5px;
+    z-index:0;
   }
   .Recorder{
     width:50px;
@@ -58,7 +59,30 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Helvetica;
     font-weight: 300;
 }
-
+.element{
+  vertical-align: middle;
+  width:100%;
+  margin:5px 5px 5px 5px;
+}
+.paper{
+  margin:25px 25px 25px 25px;
+}
+.loadMore{
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.visualizer{
+  flex: 25%;
+  padding: 0 4px;
+}
+.elements{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
 .navbar__title {
     margin-right: auto;
     font-size: 150%;
