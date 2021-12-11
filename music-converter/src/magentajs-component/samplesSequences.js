@@ -1,0 +1,52 @@
+        export const SamplesSequences = [{
+            title:"TWINKLE_TWINKLE",
+            notes: [
+              {pitch: 60, startTime: 0.0, endTime: 0.5},
+              {pitch: 60, startTime: 0.5, endTime: 1.0},
+              {pitch: 67, startTime: 1.0, endTime: 1.5},
+              {pitch: 67, startTime: 1.5, endTime: 2.0},
+              {pitch: 69, startTime: 2.0, endTime: 2.5},
+              {pitch: 69, startTime: 2.5, endTime: 3.0},
+              {pitch: 67, startTime: 3.0, endTime: 4.0},
+              {pitch: 65, startTime: 4.0, endTime: 4.5},
+              {pitch: 65, startTime: 4.5, endTime: 5.0},
+              {pitch: 64, startTime: 5.0, endTime: 5.5},
+              {pitch: 64, startTime: 5.5, endTime: 6.0},
+              {pitch: 62, startTime: 6.0, endTime: 6.5},
+              {pitch: 62, startTime: 6.5, endTime: 7.0},
+              {pitch: 60, startTime: 7.0, endTime: 8.0},
+            ],
+            tempos: [{
+              time: 0, 
+              qpm: 120
+            }],
+            totalTime: 8,
+            name:"HALINA",
+          },
+         {
+           title:"YEAAAH",
+              notes: [
+                {pitch: 50, startTime: 0.0, endTime: 0.5},
+                {pitch: 50, startTime: 0.5, endTime: 1.0},
+                {pitch: 57, startTime: 1.0, endTime: 1.5},
+                {pitch: 57, startTime: 1.5, endTime: 2.0},
+                {pitch: 59, startTime: 2.0, endTime: 2.5},
+                {pitch: 59, startTime: 2.5, endTime: 3.0},
+                {pitch: 57, startTime: 3.0, endTime: 4.0},
+                {pitch: 55, startTime: 4.0, endTime: 4.5},
+                {pitch: 55, startTime: 4.5, endTime: 5.0},
+                {pitch: 54, startTime: 5.0, endTime: 5.5},
+                {pitch: 54, startTime: 5.5, endTime: 6.0},
+                {pitch: 52, startTime: 6.0, endTime: 6.5},
+                {pitch: 52, startTime: 6.5, endTime: 7.0},
+                {pitch: 50, startTime: 7.0, endTime: 8.0},
+              ],
+              tempos: [{
+                time: 0, 
+                qpm: 120
+              }],
+              totalTime: 8,
+              name:"Tomasz",
+            },
+            {"title": "Czwarty", "notes":[{"pitch":69,"velocity":61,"startTime":0.192,"endTime":0.352},{"pitch":71,"velocity":62,"startTime":0.28800000000000003,"endTime":0.896},{"pitch":60,"velocity":44,"startTime":0.28800000000000003,"endTime":0.928},{"pitch":69,"velocity":60,"startTime":0.608,"endTime":0.928},{"pitch":67,"velocity":49,"startTime":2.048,"endTime":2.112},{"pitch":62,"velocity":54,"startTime":1.536,"endTime":2.208},{"pitch":68,"velocity":51,"startTime":1.984,"endTime":2.208},{"pitch":69,"velocity":54,"startTime":1.856,"endTime":2.208},{"pitch":55,"velocity":38,"startTime":1.568,"endTime":2.24},{"pitch":71,"velocity":59,"startTime":0.896,"endTime":2.24},{"pitch":50,"velocity":38,"startTime":1.28,"endTime":2.432},{"pitch":66,"velocity":55,"startTime":2.176,"endTime":2.976},{"pitch":59,"velocity":50,"startTime":2.912,"endTime":3.36},{"pitch":66,"velocity":49,"startTime":2.976,"endTime":3.36},{"pitch":82,"velocity":66,"startTime":3.232,"endTime":3.36},{"pitch":54,"velocity":59,"startTime":3.2640000000000002,"endTime":3.424},{"pitch":64,"velocity":60,"startTime":3.456,"endTime":3.552}],"totalTime":3.552,"name":"Arek"},
+        ];
