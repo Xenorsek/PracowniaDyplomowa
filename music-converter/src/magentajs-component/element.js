@@ -45,9 +45,9 @@ class Element extends React.Component {
       publicStatusLoading: false,
       isDeleted: false,
       isPendingDelete: false,
+      theme: this.props.theme,
     };
   }
-
   handlePublic = async (e) => {
     this.setState({ publicStatusLoading: true })
     e.preventDefault();
@@ -164,12 +164,12 @@ class Element extends React.Component {
         }
       }
   }
-
+  
   componentDidMount() {
     this.setState({
       viz: new mm.PianoRollCanvasVisualizer(
         this.state.seq,
-        inputEl.current
+        inputEl.current, this.props.theme
       ),
       playerViz: new mm.Player(false, {
         run: (note) => this.state.viz.redraw(note),
@@ -201,7 +201,7 @@ class Element extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="element">
         <div>
           <h1>{this.state.title}</h1>
           <h5>By: {this.state.name}</h5>
@@ -219,7 +219,7 @@ class Element extends React.Component {
             )}
           </>
         )}
-        <canvas onClick={this.handlePlayButton} className="musicSequence" ref={inputEl} />
+        <canvas className="visualizer" onClick={this.handlePlayButton} className="musicSequence" ref={inputEl} />
         <div className="playButton" onClick={this.handlePlayButton}>
           {this.state.isPlaying && (<BsIcon.BsPauseCircleFill className="heartIcon" />)}
           {!this.state.isPlaying && (<BsIcon.BsFillPlayCircleFill className="heartIcon" />)}
