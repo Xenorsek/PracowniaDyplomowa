@@ -3,7 +3,7 @@ import Elements from "../magentajs-component/elements";
 import { projectFirestore } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-function Favorites() {
+function Favorites({theme}) {
   const { user } = useAuthContext();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
@@ -62,7 +62,7 @@ function Favorites() {
     setIsPending(true);
     if (favoritesSequences) {
       projectFirestore
-        .collection("musicSequences").orderBy("date").limit(limit).where("id", "in", favoritesSequences)
+        .collection("musicSequences").orderBy("date",'desc').limit(limit).where("id", "in", favoritesSequences)
         .get()
         .then((snapshot) => {
           if (snapshot.empty) {
@@ -91,12 +91,14 @@ function Favorites() {
       {error && <p className="error">{error}</p>}
 
       {data && (
-        <Elements sequences={data} privateCollection={privateCollection} />
+        <Elements sequences={data} privateCollection={privateCollection} theme={theme} />
       )}
       {isPending && <p className="loading"> Loading...</p>}
       {UpToDate && <p>{UpToDate}</p>}
       {!UpToDate && !isPending &&
-        <button onClick={setSecond}>Load more</button>
+                <div className="loadMore">
+                <button onClick={setSecond}>Load more</button>
+              </div>
       }
     </div>
   );

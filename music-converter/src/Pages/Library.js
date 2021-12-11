@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Elements from "../magentajs-component/elements";
 import { projectFirestore } from "../firebase/config";
-function Library() {
+function Library({ theme }) {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(false);
@@ -12,7 +12,7 @@ function Library() {
 
   function setSecond() {
     setIsPending(true);
-    projectFirestore.collection("musicSequences").orderBy('date').startAfter(lastVisible).limit(limit).where("publicStatus", "==", true).get()
+    projectFirestore.collection("musicSequences").orderBy('date', 'desc').startAfter(lastVisible).limit(limit).where("publicStatus", "==", true).get()
       .then((snapshot) => {
         if (snapshot.empty) {
           setUpToDate("You are up to date!");
@@ -33,7 +33,7 @@ function Library() {
 
   useEffect(() => {
     setIsPending(true);
-    projectFirestore.collection("musicSequences").orderBy('date').limit(limit).where("publicStatus", "==", true).get().then((snapshot) => {
+    projectFirestore.collection("musicSequences").orderBy('date', 'desc').limit(limit).where("publicStatus", "==", true).get().then((snapshot) => {
       if (snapshot.empty) {
         setError("No sequences to load");
         setIsPending(false);
@@ -57,12 +57,14 @@ function Library() {
     <div class="pudelko">
       {error && <p className="error">{error}</p>}
       {data && (
-        <Elements sequences={data} privateCollection={privateCollection} />
+        <Elements sequences={data} privateCollection={privateCollection} theme={theme} />
       )}
       {isPending && <p className="loading"> Loading...</p>}
-      {UpToDate && <p>{ UpToDate }</p>}
+      {UpToDate && <p>{UpToDate}</p>}
       {!UpToDate && !isPending &&
-        <button onClick={setSecond}>Load more</button>
+        <div className="loadMore">
+          <button onClick={setSecond}>Load more</button>
+        </div>
       }
 
 

@@ -48,33 +48,33 @@ function App() {
               <Toggle theme={theme} toggleTheme={toggleTheme} />
               <Switch>
                 <Route exact={true} path="/" component={Home} />
-                <Route path="/library" component={Library} />
-                
+                <Route path="/library"><Library theme={theme} /> </Route>
+
                 <Route path="/upload">
-                  {!user && <Redirect to="/"/>}
-                  {user && <UploadComponent />}
+              {!user && <Redirect to="/"/>}
+              {user && <UploadComponent />}
                 </Route>
 
                 <Route path="/uploads" component={Uploads} >
-                {!user && <Redirect to="/" />}
-                  {user && <Uploads />}
-                  </Route>
+              {!user && <Redirect to="/" />}
+              {user && <Uploads theme={theme} />}
+                </Route>
 
                 <Route path="/favorites" component={Favorites}>
-                  {!user && <Redirect to="/" />}
-                  {user && <Favorites />}
+              {!user && <Redirect to="/" />}
+              {user && <Favorites theme={theme} />}
                 </Route>
                 <Route path="/login">
-                  {user && <Redirect to="/" />}
-                  {!user && <Login />}
+              {user && <Redirect to="/" />}
+              {!user && <Login />}
                 </Route>
                 <Route path="/signup">
-                  {user && <Redirect to="/" />}
-                  {!user && <Signup />}
+              {user && <Redirect to="/" />}
+              {!user && <Signup />}
                 </Route>
                 <Route path="/profil">
-                  {!user && <Redirect to="/" />}
-                  {user && <Profil />}
+              {!user && <Redirect to="/" />}
+              {user && <Profil />}
                 </Route>
               </Switch>
             </Suspense>

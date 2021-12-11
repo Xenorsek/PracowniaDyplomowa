@@ -3,7 +3,7 @@ import Elements from "../magentajs-component/elements";
 import { projectFirestore } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-function Uploads() {
+function Uploads({theme}) {
   const { user } = useAuthContext();
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(false);
@@ -14,7 +14,7 @@ function Uploads() {
   const limit = 5;
   function setSecond() {
     setIsPending(true);
-    projectFirestore.collection("musicSequences").orderBy('date').startAfter(lastVisible).limit(limit).where("author","==",user.uid).get()
+    projectFirestore.collection("musicSequences").orderBy('date').startAfter(lastVisible).limit(limit).where("author", "==", user.uid).get()
       .then((snapshot) => {
         if (snapshot.empty) {
           setUpToDate("You are up to date!");
@@ -36,7 +36,7 @@ function Uploads() {
   useEffect(() => {
     setIsPending(true);
     projectFirestore
-      .collection("musicSequences").orderBy("date").limit(limit).where("author","==",user.uid)
+      .collection("musicSequences").orderBy("date", "desc").limit(limit).where("author", "==", user.uid)
       .get()
       .then((snapshot) => {
         if (snapshot.empty) {
@@ -60,11 +60,13 @@ function Uploads() {
   return (
     <div className="Uploads">
       {error && <p className="error">{error}</p>}
-      {data && <Elements sequences={data} privateCollection = {privateCollection} />}
+      {data && <Elements sequences={data} privateCollection={privateCollection} theme={theme} />}
       {isPending && <p className="loading"> Loading...</p>}
-      {UpToDate && <p>{ UpToDate }</p>}
+      {UpToDate && <p>{UpToDate}</p>}
       {!UpToDate && !isPending &&
-        <button onClick={setSecond}>Load more</button>
+        <div className="loadMore">
+          <button onClick={setSecond}>Load more</button>
+        </div>
       }
     </div>
   );
