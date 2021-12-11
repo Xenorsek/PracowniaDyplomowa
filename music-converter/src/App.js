@@ -33,6 +33,7 @@ import Profil from "./Pages/Profil";
 
 const TopNavBar = withTranslation()(NavBar);
 const UploadComponent = withTranslation()(Upload);
+const Home_page = withTranslation()(Home);
 function App() {
   const { authIsReady, user } = useAuthContext();
   const [theme, toggleTheme] = useDarkMode();
@@ -47,7 +48,7 @@ function App() {
               <TopNavBar />
               <Toggle theme={theme} toggleTheme={toggleTheme} />
               <Switch>
-                <Route exact={true} path="/" component={Home} />
+                <Route exact={true} path="/" component={Home_page} />
                 <Route path="/library"><Library theme={theme} /> </Route>
 
                 <Route path="/upload">
