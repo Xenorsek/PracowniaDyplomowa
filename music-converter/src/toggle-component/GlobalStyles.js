@@ -16,9 +16,6 @@ export const GlobalStyles = createGlobalStyle`
     height:45px;
     cursor:pointer;
   }
-  .musicSequence{
-    cursor:pointer;
-  }
   .HeartIcon{
     width:100%;
     height:100%;
@@ -77,6 +74,7 @@ export const GlobalStyles = createGlobalStyle`
 .visualizer{
   flex: 25%;
   padding: 0 4px;
+  cursor:pointer;
 }
 .elements{
   display: flex;
