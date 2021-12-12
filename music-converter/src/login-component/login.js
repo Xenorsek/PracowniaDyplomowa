@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLogin } from "../hooks/useLogIn";
 import { useResetPassword } from "../hooks/useResetPassword";
-import i18n from "../i18n/i18n";
 import { Translation } from 'react-i18next';
 
 export default function Login() {

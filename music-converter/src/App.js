@@ -10,11 +10,6 @@ import NavBar from "./navbar-top/navbar-top-component";
 //translate template
 import React, { Suspense } from "react";
 import { withTranslation } from "react-i18next";
-import {
-  WelcomeClass,
-  LegacyWelcomeClass,
-  HelloWorld,
-} from "./i18n/translation";
 
 import Upload from "../src/Pages/Upload";
 import Library from "../src/Pages/Library";

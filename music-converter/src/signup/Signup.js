@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
-import i18n from "../i18n/i18n";
 import { Translation } from 'react-i18next';
 
 export default function Signup() {
