@@ -206,11 +206,13 @@ class Element extends React.Component {
           <h1>{this.state.title}</h1>
           <h5>By: {this.state.name}</h5>
         </div>
+        {(this.props.user && <> 
         {(this.props.user.displayName === this.state.name && this.state.privateCollection && 
           <>
           <div className="HeartIconBox"><BsIcon.BsHeartFill className="HeartIcon" color="red" /><span className="likeValue">{this.state.likesValue}</span></div>
           </>
           )}
+          </>)}
         {(this.props.user && !this.state.privateCollection) && (
           <>
             {(!this.state.isLiked && !this.state.FavoritesPending) && (
