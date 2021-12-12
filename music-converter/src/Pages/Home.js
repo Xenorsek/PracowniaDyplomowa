@@ -7,7 +7,9 @@ class Home extends React.Component{
             <div className="Home">
             <h1>{t("Home")}</h1>
             <span>{t("Welcome")}</span>
-            <span> Przebieg aplikacji:</span>
+            <br></br>
+            <span>Przebieg aplikacji:</span>
+            <span>
                 <ul>
                     <li>W pierwszej kolejności załóż konto lub się zaloguj.</li>
                     <li>Następnie przejdź do upload/konwerter by móc skorzystać z upload'u z pliku bądź z dyktafonu.</li>
@@ -17,6 +19,7 @@ class Home extends React.Component{
                     <li>W bibliotece możesz przesłuchać utworów innych oraz zapisać je do ulubionych klikając serduszko.</li>
                     <li> Liczba koło serduszek znaczy ile osób je polubiło.</li>
                 </ul>
+                </span>
                 <span>Baw się dobrze!</span>
         </div>
         )

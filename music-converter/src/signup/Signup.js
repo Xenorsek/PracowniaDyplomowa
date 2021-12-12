@@ -27,14 +27,14 @@ export default function Signup() {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
-        <label>
+        <label><br></br>
         <Translation>{(t,{i18n})=><span>{i18n.t('Login2.2.Password')}: </span>}</Translation>
           <input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-        </label>
+        </label><br></br>
         <label>
         <Translation>{(t,{i18n})=><span>{i18n.t('Login2.4.DisplayName')}: </span>}</Translation>
           <input

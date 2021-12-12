@@ -35,7 +35,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
-            <label>
+            <label><br></br>
             <Translation>{(t,{i18n})=><span>{i18n.t('Login2.2.Password')}: </span>}</Translation>
               <input
                 type="password"
@@ -58,7 +58,7 @@ export default function Login() {
               <Translation>{(t,{i18n})=><span>{i18n.t('Login2.3.Email')}: </span>}</Translation>
               <input type="email"
                 onChange={(e) => setEmailToResetPassword(e.target.value)}
-                value={emailToResetPassword} />
+                value={emailToResetPassword} /><br></br>
               {message === "Email sent!" && (<button disabled className="btn"><Translation>{(t,{i18n})=><>{i18n.t('Login2.7.Done')}</>}</Translation></button>)}
               {(!message || message !== "Email sent!") && (<button className="btn"><Translation>{(t,{i18n})=><>{i18n.t('Login2.8.RecoverPassword')}</>}</Translation></button>)}
               {message && <p>{message}</p>}
