@@ -1,5 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
+import { Button } from "@mui/material";
+
+const useStyles = makeStyles({
+  field: {
+    margin: 5,
+    display: "table-cell",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    maxHeight: 300,
+    gap: 5,
+    marginTop: 7,
+  },
+});
 
 export default function Profil() {
   const { user } = useAuthContext();
@@ -9,6 +27,11 @@ export default function Profil() {
   const [isPending, setPending] = useState();
   const [error, setError] = useState();
   const [isCancelled, setIsCancelled] = useState(false);
+  const [emailLabel, setEmailLabel] = useState("Email");
+  const [passwordLabel, setPasswordLabel] = useState("Password");
+  const [displayNameLabel, setDisplayNameLabel] = useState("Display name");
+
+  const classes = useStyles();
 
   const handleSubmitEmail = (e) => {
     e.preventDefault();
@@ -100,62 +123,105 @@ export default function Profil() {
   }, []);
   return (
     <>
-      <form onSubmit={handleSubmitEmail} className="login-form">
-        <label>
-          <h2>Profil</h2>
-          <span>email: </span>
-          <input
-            type="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-          />
-        </label>
-        {!isPending && <button className="btn">change email</button>}
+      <h2>Profil</h2>
+      <form onSubmit={handleSubmitEmail} className={classes.form}>
+        <TextField
+          type="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          value={email}
+          label={emailLabel}
+          className={classes.field}
+          variant="outlined"
+          color="secondary"
+        />
+        {!isPending && (
+          <Button
+            onClick={handleSubmitEmail}
+            color="secondary"
+            variant="outlined"
+            className={classes.field}
+          >
+            change email
+          </Button>
+        )}
         {isPending && (
-          <button className="btn" disabled>
+          <Button
+            color="secondary"
+            variant="outlined"
+            className={classes.field}
+            disabled
+          >
             loading
-          </button>
+          </Button>
         )}
       </form>
-      <form onSubmit={handleSubmitPassword}>
-        <label>
-          <span> new password: </span>
-          <input
-            type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            value={password}
-          />
-        </label>
-        {!isPending && <button className="btn">change password</button>}
+      <form onSubmit={handleSubmitPassword} className={classes.form}>
+        <TextField
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          value={password}
+          label={passwordLabel}
+          color="secondary"
+          variant="outlined"
+        />
+        {!isPending && (
+          <Button
+            color="secondary"
+            variant="outlined"
+            className={classes.field}
+            onClick={handleSubmitPassword}
+          >
+            change password
+          </Button>
+        )}
         {isPending && (
-          <button className="btn" disabled>
+          <Button
+            color="secondary"
+            variant="outlined"
+            className={classes.field}
+            disabled
+          >
             loading
-          </button>
+          </Button>
         )}
       </form>
-      <form onSubmit={handleSubmitProfile}>
-        <label>
-          <span> display name: </span>
-          <input
-            type="text"
-            onChange={(e) => {
-              setDisplayName(e.target.value);
-            }}
-            value={displayName}
-          />
-        </label>
-        {!isPending && <button className="btn">change name </button>}
-        {isPending && (
-          <button className="btn" disabled>
-            loading
-          </button>
+      <form onSubmit={handleSubmitProfile} className={classes.form}>
+        <TextField
+          type="text"
+          label={displayNameLabel}
+          onChange={(e) => {
+            setDisplayName(e.target.value);
+          }}
+          value={displayName}
+          color="secondary"
+          variant="outlined"
+        />
+        {!isPending && (
+          <Button
+            color="secondary"
+            variant="outlined"
+            className={classes.field}
+            onClick={handleSubmitProfile}
+          >
+            change name{" "}
+          </Button>
         )}
-        {error && <p>{error}</p>}
+        {isPending && (
+          <Button
+            className={classes.field}
+            color="secondary"
+            variant="outlined"
+            disabled
+          >
+            loading
+          </Button>
+        )}
       </form>
+      {error && <p>{error}</p>}
     </>
   );
 }

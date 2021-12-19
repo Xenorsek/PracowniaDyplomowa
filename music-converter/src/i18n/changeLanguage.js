@@ -22,7 +22,7 @@ class ChangeLanguage extends React.Component {
       <div className="App">
         
           <div>
-              <select class="form-select" value = {this.state.lng} onChange={this.handleChange}>
+              <select className="form-select" value = {this.state.lng} onChange={this.handleChange}>
                   <option value="pl" >pl</option>
                   <option value="en">en</option>
               </select>
