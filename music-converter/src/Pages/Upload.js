@@ -1,6 +1,8 @@
 import React from "react";
 import * as RiIcons from "react-icons/ri";
 import * as BsIcons from "react-icons/bs";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 import * as mm from "@magenta/music";
 import { projectFirestore } from "../firebase/config";
@@ -24,7 +26,7 @@ const blob = [];
 class Upload extends React.Component {
   state = {
     user: this.props.useAuthContextValue,
-    title: "Type title here",
+    title: "Title",
     selectedFile: null,
     model: new mm.OnsetsAndFrames(
       "https://storage.googleapis.com/magentadata/js/checkpoints/transcription/onsets_frames_uni"
@@ -283,13 +285,15 @@ else{
         </div>
         {this.state.notes && (
           <>
-            <input type="text" value={this.state.title} name="title" onChange={this.handleChangeTitle}></input>
+          <form className="addUpload">
+            <TextField type="text" className="addUpload-element" color="secondary" value={this.state.title} label="title" onChange={this.handleChangeTitle}></TextField>
             {!this.state.isSentToDatabaseAlready && (
-              <button onClick={this.handleSendData}>Send To DataBase</button>
+              <Button color="secondary" className="addUpload-element" variant="outlined" onClick={this.handleSendData}>Send To DataBase</Button>
             )}
             {this.state.isSentToDatabaseAlready && (
-              <button disabled>Sent</button>
+              <Button color="secondary" className="addUpload-element" variant="outlined" disabled>Sent</Button>
             )}
+            </form>
           </>
         )}
       </div>

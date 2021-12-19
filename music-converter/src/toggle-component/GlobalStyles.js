@@ -67,6 +67,15 @@ export const GlobalStyles = createGlobalStyle`
   margin: 5px;
   flex:0 auto;
 }
+.addUpload{
+  display: flex;
+  flex-Direction:row;
+  flex-wrap: wrap;
+  gap:15px;
+}
+.addUpload-element{
+  display:table-cell;
+}
 .loadMore{
   margin: 0;
   position: absolute;

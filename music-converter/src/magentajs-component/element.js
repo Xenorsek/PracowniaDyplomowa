@@ -6,6 +6,8 @@ import { useAddFavorites } from "../hooks/useAddFavorites";
 import { useRemoveFavorites } from "../hooks/useRemoveFavorites";
 import * as Tone from "tone"
 import * as BsIcon from "react-icons/bs";
+import { Button } from "@mui/material";
+
 function withMyHooks(Component) {
   return function WrappedComponent(props) {
     const useAuthContextValue = useAuthContext();
@@ -235,22 +237,22 @@ class Element extends React.Component {
         {this.state.privateCollection && (
           <>
             {(!this.state.publicStatus && !this.state.publicStatusLoading) && (
-              <button onClick={this.handlePublic}>Public</button>
+              <Button color="secondary" onClick={this.handlePublic}>Public</Button>
             )}
             {(this.state.publicStatus && !this.state.publicStatusLoading) && (
-              <button onClick={this.handlePrivate}>Private</button>
+              <Button color="secondary" onClick={this.handlePrivate}>Private</Button>
             )}
             {this.state.publicStatusLoading && (
-              <button disabled >Loading</button>
+              <Button color="secondary" disabled >Loading</Button>
             )}
             {(this.state.isDeleted && !this.state.isPendingDelete) && (
-              <button disabled>Deleted</button>
+              <Button color="error" disabled>Deleted</Button>
             )}
             {(!this.state.isDeleted && !this.state.isPendingDelete) && (
-              <button onClick={this.handleDelete}>Delete</button>
+              <Button color="error" onClick={this.handleDelete}>Delete</Button>
             )}
             {this.state.isPendingDelete && (
-              <button disabled>Loading</button>
+              <Button color="error" disabled>Loading</Button>
             )}
           </>
         )}

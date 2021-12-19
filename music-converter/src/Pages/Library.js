@@ -3,6 +3,7 @@ import Elements from "../magentajs-component/elements";
 import { projectFirestore } from "../firebase/config";
 import i18n from "../i18n/i18n";
 import { Translation } from 'react-i18next';
+import { Button } from "@mui/material";
 
 function Library({ theme }) {
   const [data, setData] = useState(null);
@@ -66,7 +67,7 @@ function Library({ theme }) {
       <div className="loadMore">
         {UpToDate && <p>{UpToDate}</p>}
         {!UpToDate && !isPending &&
-          <button onClick={setSecond}><Translation>{(t, { i18n }) => <>{i18n.t('LoadMore')}</>}</Translation></button>
+          <Button color="secondary" onClick={setSecond}><Translation>{(t, { i18n }) => <>{i18n.t('LoadMore')}</>}</Translation></Button>
         }
       </div>
     </div>

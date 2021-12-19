@@ -4,6 +4,8 @@ import { projectFirestore } from "../firebase/config";
 import { useAuthContext } from "../hooks/useAuthContext";
 import i18n from "../i18n/i18n";
 import { Translation } from 'react-i18next';
+import { Button } from "@mui/material";
+
 function Uploads({theme}) {
   const { user } = useAuthContext();
   const [data, setData] = useState(null);
@@ -66,7 +68,7 @@ function Uploads({theme}) {
       <div className="loadMore">
         {UpToDate && <p>{UpToDate}</p>}
         {!UpToDate && !isPending &&
-          <button onClick={setSecond}><Translation>{(t, { i18n }) => <>{i18n.t('LoadMore')}</>}</Translation></button>
+          <Button color="secondary" onClick={setSecond}><Translation>{(t, { i18n }) => <>{i18n.t('LoadMore')}</>}</Translation></Button>
         }
       </div>
     </div>
