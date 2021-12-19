@@ -57,12 +57,15 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 300;
 }
 .element{
-  vertical-align: middle;
-  width:100%;
   margin:5px 5px 5px 5px;
+  width:100%;
+  height:100%;
+
 }
 .paper{
-  margin:25px 25px 25px 25px;
+  flex-basis: 125px;
+  margin: 5px;
+  flex:0 auto;
 }
 .loadMore{
   margin: 0;
@@ -72,14 +75,14 @@ export const GlobalStyles = createGlobalStyle`
   transform: translate(-50%, -50%);
 }
 .visualizer{
-  flex: 25%;
   padding: 0 4px;
   cursor:pointer;
 }
 .elements{
   display: flex;
   flex-wrap: wrap;
-  padding: 0 4px;
+  align-items: flex-start;
+  gap:30px;
 }
 .navbar__title {
     margin-right: auto;
