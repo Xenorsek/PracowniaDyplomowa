@@ -108,6 +108,11 @@ export default function Profil() {
             setPending(false);
           });
       }
+      else{
+        console.log("New Display name can't be previous display name");
+        setError("New Display name can't be previous display name");
+        setPending(false);
+      }
     } catch (err) {
       if (!isCancelled) {
         console.log(err.message);

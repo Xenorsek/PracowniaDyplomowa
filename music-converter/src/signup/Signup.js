@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
-    maxHeight: 300,
+    maxHeight: 350,
     gap: 5,
   },
 });
