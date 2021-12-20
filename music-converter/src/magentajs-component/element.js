@@ -29,6 +29,9 @@ const inputEl = React.createRef(null);
 class Element extends React.Component {
   constructor(props) {
     super(props);
+    this.elementRef = React.createRef();
+    this.topElementRef = React.createRef();
+    this.botElementRef = React.createRef();
     this.state = {
       title: this.props.title,
       seq: this.props.seq,
@@ -166,8 +169,15 @@ class Element extends React.Component {
         }
       }
   }
-  
+  handleClickBox = (event)=>{
+    this.botElementRef.current.style.visibility="visible";
+    this.elementRef.current.style.height="100%";
+    this.elementRef.current.style.width="100%";
+  }
   componentDidMount() {
+
+   let x = this.topElementRef.current.offsetWidth;
+   this.elementRef.current.style.width = x + "px";
     this.setState({
       viz: new mm.PianoRollCanvasVisualizer(
         this.state.seq,
@@ -203,11 +213,11 @@ class Element extends React.Component {
   }
   render() {
     return (
-      <div className="element">
-        <div>
-          <h1>{this.state.title}</h1>
-          <h5>By: {this.state.name}</h5>
-        </div>
+      <div className="element" ref={this.elementRef} onClick={this.handleClickBox}>
+        <div className="topElement" ref={this.topElementRef}>
+          <h1 className="title" >{this.state.title}</h1>
+          <h5 className="author" >By: {this.state.name}</h5>
+        
         {(this.props.user && <> 
         {(this.props.user.displayName === this.state.name && this.state.privateCollection && 
           <>
@@ -215,6 +225,7 @@ class Element extends React.Component {
           </>
           )}
           </>)}
+
         {(this.props.user && !this.state.privateCollection) && (
           <>
             {(!this.state.isLiked && !this.state.FavoritesPending) && (
@@ -228,6 +239,8 @@ class Element extends React.Component {
             )}
           </>
         )}
+      </div>
+      <div className="botElement" ref={this.botElementRef}>
         <canvas className="visualizer" onClick={this.handlePlayButton} ref={inputEl} />
         <div className="playButton" onClick={this.handlePlayButton}>
           {this.state.isPlaying && (<BsIcon.BsPauseCircleFill className="heartIcon" />)}
@@ -256,6 +269,7 @@ class Element extends React.Component {
             )}
           </>
         )}
+        </div>
       </div>
     );
   }

@@ -58,14 +58,35 @@ export const GlobalStyles = createGlobalStyle`
 }
 .element{
   margin:5px 5px 5px 5px;
-  width:100%;
-  height:100%;
-
+  height:90px;
 }
 .paper{
   flex-basis: 125px;
   margin: 5px;
   flex:0 auto;
+}
+.topElement{
+  display:flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  width:max-content;
+}
+.title{
+  display:table-cell;
+  width: max-content;
+}
+.author{
+  display:table-cell;
+  width: max-content;
+}
+.botElement{
+visibility:hidden;
+}
+.elements{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap:30px;
 }
 .addUpload{
   display: flex;
@@ -77,7 +98,7 @@ export const GlobalStyles = createGlobalStyle`
   display:table-cell;
 }
 .loadMore{
-  margin: 0;
+  margin-top:15px;
   position: absolute;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
@@ -86,12 +107,6 @@ export const GlobalStyles = createGlobalStyle`
 .visualizer{
   padding: 0 4px;
   cursor:pointer;
-}
-.elements{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap:30px;
 }
 .navbar__title {
     margin-right: auto;

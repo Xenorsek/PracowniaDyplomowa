@@ -12,7 +12,7 @@ function Library({ theme }) {
   const privateCollection = false;
   const [lastVisible, setLastVisible] = useState(null);
   const [UpToDate, setUpToDate] = useState(false)
-  const limit = 5;
+  const limit = 15;
 
   function setSecond() {
     setIsPending(true);
@@ -58,7 +58,7 @@ function Library({ theme }) {
   }, []);
 
   return (
-    <div class="pudelko">
+    <div className="pudelko">
       {error && <p className="error">{error}</p>}
       {data && (
         <Elements sequences={data} privateCollection={privateCollection} theme={theme} />
