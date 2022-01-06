@@ -85,7 +85,7 @@ function Elements({ sequences, privateCollection, theme }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            {musicSequenceForModal && keyForModal && (
+            {musicSequenceForModal && (
               <Element
                 key={keyForModal}
                 title={musicSequenceForModal.title}
