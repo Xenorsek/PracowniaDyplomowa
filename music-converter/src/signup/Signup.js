@@ -9,6 +9,7 @@ const useStyles = makeStyles({
   field: {
     margin: 5,
     display: "table-cell",
+    width:"100%",
   },
   form: {
     display: "flex",
