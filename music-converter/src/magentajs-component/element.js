@@ -169,15 +169,15 @@ class Element extends React.Component {
         }
       }
   }
-  handleClickBox = (event)=>{
-    this.botElementRef.current.style.visibility="visible";
-    this.elementRef.current.style.height="100%";
-    this.elementRef.current.style.width="100%";
-  }
+  // handleClickBox = (event)=>{
+  //   this.botElementRef.current.style.visibility="visible";
+  //   this.elementRef.current.style.height="100%";
+  //   this.elementRef.current.style.width="100%";
+  // }
   componentDidMount() {
 
-   let x = this.topElementRef.current.offsetWidth;
-   this.elementRef.current.style.width = x + "px";
+  //  let x = this.topElementRef.current.offsetWidth;
+  //  this.elementRef.current.style.width = x + "px";
     this.setState({
       viz: new mm.PianoRollCanvasVisualizer(
         this.state.seq,
@@ -213,7 +213,8 @@ class Element extends React.Component {
   }
   render() {
     return (
-      <div className="element" ref={this.elementRef} onClick={this.handleClickBox}>
+      <div className="element" ref={this.elementRef}>
+      {/* <div className="element" ref={this.elementRef} onClick={this.handleClickBox}> */}
         <div className="topElement" ref={this.topElementRef}>
           <h1 className="title" >{this.state.title}</h1>
           <h5 className="author" >By: {this.state.name}</h5>

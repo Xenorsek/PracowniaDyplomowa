@@ -58,12 +58,11 @@ export const GlobalStyles = createGlobalStyle`
 }
 .element{
   margin:5px 5px 5px 5px;
-  height:90px;
 }
 .paper{
-  flex-basis: 125px;
+  // flex-basis: 125px;
   margin: 5px;
-  flex:0 auto;
+  flex:1 auto;
 }
 .topElement{
   display:flex;
@@ -79,9 +78,9 @@ export const GlobalStyles = createGlobalStyle`
   display:table-cell;
   width: max-content;
 }
-.botElement{
-visibility:hidden;
-}
+// .botElement{
+// visibility:hidden;
+// }
 .elements{
   display: flex;
   flex-wrap: wrap;
