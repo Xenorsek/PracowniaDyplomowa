@@ -12,8 +12,8 @@ i18n
     resources: {
       en: {
         translation: {
-          Welcome: "Welcome to Music Converter",
-          title: "Music Converter",
+          Welcome: "Welcome to Sound Converter",
+          title: "Sound Converter",
           HelloWorld: "Hello world",
           Login: "Log in",
           Signup: "Sign in",
@@ -46,8 +46,8 @@ i18n
       },
       pl: {
         translation: {
-          Welcome: "Witaj w Music Converter",
-          title: "Music Converter",
+          Welcome: "Witaj w Sound Converter",
+          title: "Sound Converter",
           HelloWorld: "Witaj świecie",
           Login: "Zaloguj",
           Signup: "Zarejestruj",
