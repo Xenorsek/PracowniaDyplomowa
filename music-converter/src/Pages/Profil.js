@@ -5,17 +5,23 @@ import { makeStyles } from "@mui/styles";
 import { Button } from "@mui/material";
 
 const useStyles = makeStyles({
+  box:{
+    alignItems: "center",
+    justifyContent:"center",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   field: {
     margin: 5,
-    display: "table-cell",
   },
   form: {
-    display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     maxHeight: 300,
     gap: 5,
     marginTop: 7,
+    display:"inline-grid"
   },
 });
 
@@ -129,6 +135,7 @@ export default function Profil() {
   return (
     <>
       <h2>Profil</h2>
+      <div className={classes.box}>
       <form onSubmit={handleSubmitEmail} className={classes.form}>
         <TextField
           type="email"
@@ -227,6 +234,7 @@ export default function Profil() {
         )}
       </form>
       {error && <p>{error}</p>}
+      </div>
     </>
   );
 }
