@@ -26,6 +26,7 @@ const Toggle = ({ theme, toggleTheme }) => {
 const ToggleContainer = styled.button`
   position: relative;
   display: flex;
+  top:-65px;
   justify-content: space-between;
   background: ${({ theme }) => theme.gradient};
   width: 8rem;
