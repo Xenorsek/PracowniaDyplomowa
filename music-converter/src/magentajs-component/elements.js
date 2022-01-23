@@ -4,7 +4,7 @@ import Element from "./element";
 import Paper from "@mui/material/Paper";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Modal, Button, Box } from "@mui/material";
-import * as Tone from "tone"
+import * as Tone from "tone";
 
 const style = {
   position: "absolute",
@@ -27,8 +27,8 @@ function Elements({ sequences, privateCollection, theme }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setOpen(false)
-    if(Tone.Transport.state === "started"){
+    setOpen(false);
+    if (Tone.Transport.state === "started") {
       Tone.Transport.stop();
     }
   };
@@ -54,18 +54,9 @@ function Elements({ sequences, privateCollection, theme }) {
           sequences.map((musicSequence, index) => (
             <Paper key={index * 50 + 1} className="paper" elevation={6}>
               <div className="topElement">
-                <h1 className="title">{musicSequence.title}</h1>
+                <h2 className="title">{musicSequence.title}</h2>
                 <h5 className="author">By: {musicSequence.name}</h5>
               </div>
-              {/* <Element
-                key={index}
-                title={musicSequence.title}
-                seq={musicSequence}
-                name={musicSequence.name}
-                privateCollection={privateCollection}
-                user={user}
-                theme={vizTheme}
-              /> */}
               <Button
                 key={index * 100 + 1}
                 onClick={() => {
@@ -85,17 +76,17 @@ function Elements({ sequences, privateCollection, theme }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            {musicSequenceForModal && (
-              <Element
-                key={keyForModal}
-                title={musicSequenceForModal.title}
-                seq={musicSequenceForModal}
-                name={musicSequenceForModal.name}
-                privateCollection={privateCollection}
-                user={user}
-                theme={vizTheme}
-              />
-            )}
+              {musicSequenceForModal && (
+                <Element
+                  key={keyForModal}
+                  title={musicSequenceForModal.title}
+                  seq={musicSequenceForModal}
+                  name={musicSequenceForModal.name}
+                  privateCollection={privateCollection}
+                  user={user}
+                  theme={vizTheme}
+                />
+              )}
           </Box>
         </Modal>
       </ThemeProvider>
