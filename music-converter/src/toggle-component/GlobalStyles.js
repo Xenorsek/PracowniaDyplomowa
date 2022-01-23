@@ -33,17 +33,27 @@ export const GlobalStyles = createGlobalStyle`
   .Recorder{
     width:50px;
     height:50px;
+
   }
+  .record-element{
+    display:contents;
+    align-items:center;
+    justify-content:center;
+  }
+  .upload{
+   display:flex;
+   flex-direction:column;
+   flex-wrap:wrap;
+   align-items:center;
+   justify-content:center;
+ }
   body {
     display:list-item;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
-    padding: 0;
-    margin: 0,auto;
     font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     transition: all 0.25s linear;
   }
@@ -62,13 +72,15 @@ export const GlobalStyles = createGlobalStyle`
 .paper{
   // flex-basis: 125px;
   margin: 5px;
-  flex:1 auto;
+  flex:0 auto;
+  padding:7px;
 }
 .topElement{
   display:flex;
   flex-direction:column;
   flex-wrap:wrap;
   width:max-content;
+  margin:5px 0px 0px 5px;
 }
 .title{
   display:table-cell;
@@ -107,6 +119,10 @@ export const GlobalStyles = createGlobalStyle`
   padding: 0 4px;
   cursor:pointer;
 }
+.error{
+  color:red;
+}
+
 .navbar__title {
     margin-right: auto;
     font-size: 150%;
@@ -134,11 +150,6 @@ export const GlobalStyles = createGlobalStyle`
   a {
     color: ${({ theme }) => theme.text};
   }
- .record-element{
-   align-items:center;
-   justify-content: center;
- }
-
   .App {
       margin:0,auto;
   }
