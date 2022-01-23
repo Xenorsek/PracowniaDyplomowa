@@ -249,7 +249,7 @@ else{
   render() {
     const { t } = this.props;
     return (
-      <div>
+      <div className="upload">
         <div className="record-element">
           <h1>{t("pickFile")}</h1>
           <div className="Recorder">
@@ -294,6 +294,7 @@ else{
               <Button color="secondary" className="addUpload-element" variant="outlined" disabled>Sent</Button>
             )}
             </form>
+            <Button color="primary" className="show-music-xml" variant="outlined">Show Xml</Button>
           </>
         )}
       </div>
