@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   field: {
     margin: 5,
     display: "table-cell",
-    width:"100%",
+    width:"50%",
   },
   form: {
     display: "flex",
@@ -17,6 +17,8 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     maxHeight: 350,
     gap: 5,
+    alignItems: "center",
+    justifyContent:"center"
   },
 });
 
@@ -109,8 +111,9 @@ export default function Signup() {
             loading
           </Button>
         )}
+              {error && <p className="error">{error}</p>}
       </form>
-      {error && <p>{error}</p>}
+
     </>
   );
 }

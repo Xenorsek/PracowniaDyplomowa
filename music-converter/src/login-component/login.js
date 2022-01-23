@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   field: {
     margin: 5,
     display: "table-cell",
-    width:"100%",
+    width:"50%",
   },
   form: {
     display: "flex",
@@ -18,6 +18,8 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     maxHeight: 300,
     gap: 6,
+    alignItems: "center",
+    justifyContent:"center"
   },
   button: {
     display: "block",
