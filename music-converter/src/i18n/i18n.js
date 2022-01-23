@@ -29,6 +29,17 @@ i18n
             { "Uploads": " Your Uploads" },
             { "Favorites": " Your Favorites" }
           ],
+          Introduction:[
+            {"ApplicationCourse":"Application Course:"},
+            {"LoginOrSignUp":" At first you should sign up or sign in."},
+            {"NextUpload":"Next use menu button in top left corner and select Upload."},
+            {"NameConvert":"Try create something, you can use your own microphone or use other music file."},
+            {"SetAsPublic":"In page Your uploads you can check your files, set is as public or remove it."},
+            {"Gratz":"After you set it as public you can check them in Library."},
+            {"Library":"In Library you can listen other files from other users. If you like them let them know giving them a heart."},
+            {"Favorites":"In Favorites you can find them easily."},
+            {"HaveFun":"Hope you have fun!"}
+          ],
           Login2: [
             { "Signup": "Signup" },
             { "Login": "Login" },
@@ -62,6 +73,17 @@ i18n
             { "Upload": "Konwerter" },
             { "Uploads": "Twoje konwerty" },
             { "Favorites": "Twoje ulubione" }
+          ],
+          Introduction:[
+            {"ApplicationCourse":"Przebieg aplikacji:"},
+            {"LoginOrSignUp":"W pierwszej kolejności załóż konto lub się zaloguj."},
+            {"NextUpload":"Następnie przejdź do upload/konwerter by móc skorzystać z upload'u z pliku bądź z dyktafonu."},
+            {"NameConvert":"Jak uda ci się stworzyć plik zapisz go podając jakiś chwytliwy tytuł."},
+            {"SetAsPublic":"Następnie by podzielić się nim ze światem upublicznij go w zakładce Twoje konwerty/Your uploads"},
+            {"Gratz":"Gratulacje, teraz mogą ją zobaczyć wszyscy w bibliotece."},
+            {"Library":"W bibliotece możesz przesłuchać utworów innych oraz zapisać je do ulubionych klikając serduszko."},
+            {"Favorites":"W zakładce ulubione, możesz przeglądać pulubione utwory."},
+            {"HaveFun":"Baw się dobrze :D"}
           ],
           Login2: [
             { "Signup": "Zarejestruj" },
